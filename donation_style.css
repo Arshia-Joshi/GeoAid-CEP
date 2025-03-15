@@ -10,5 +10,24 @@
     background-repeat:no-repeat;
 }
 .slide1 {
-    background-image: url("D:\Arshia_Coding_D\GitHub\GeoAid-CEP\photos_bg\don1.jpg")
+    background-image: url("photos_bg/donn1.jpg");
+}
+.slide2 {
+    background-image: url("photos_bg/don2.jpg")
+}
+.slide3 {
+    background-image: url("photos_bg/don3.jpg.jpg")
+}
+#arrow-left {
+    border-width: 20px 30px 20px 0;
+    border-color: transparent #fff transparent transparent;
+    left: 0;
+    margin-left: 20px;
+}
+
+#arrow-right {
+    border-width: 20px 0 20px 30px;
+    border-color: transparent transparent transparent #fff;
+    right: 0;
+    margin-right: 20px;
 }
