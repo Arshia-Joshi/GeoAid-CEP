@@ -1,33 +1,63 @@
-.slide {
+*{
     margin: 0;
     padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    width:100%;
+    box-sizing: border-box;
+}
+*{
+    font-family: candara;
+  }
+.container{
     height: 100vh;
-    overflow-x: hidden;
-    background-size:cover;
-    background-position: center;
-    background-repeat:no-repeat;
-}
-.slide1 {
-    background-image: url("photos_bg/donn1.jpg");
-}
-.slide2 {
-    background-image: url("photos_bg/don2.jpg")
-}
-.slide3 {
-    background-image: url("photos_bg/don3.jpg.jpg")
-}
-#arrow-left {
-    border-width: 20px 30px 20px 0;
-    border-color: transparent #fff transparent transparent;
-    left: 0;
-    margin-left: 20px;
-}
+    width: 100%;
+    top: 0;
 
-#arrow-right {
-    border-width: 20px 0 20px 30px;
-    border-color: transparent transparent transparent #fff;
-    right: 0;
-    margin-right: 20px;
+}
+#header{
+    position: relative;
+    z-index: 100;
+}
+.overlay{
+    background-color: rgba(0, 0,0,0.5);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top:0;
+    left: 0;
+    z-index: 10;
+}
+@keyframes fade{
+    0%{
+        opacity: 1;
+    }
+    33%{
+            opacity: 0;
+    }
+    66%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+img{
+    width: 100%;
+    height: 100%;
+    margin-top: 0;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: fade 9s ease-in-out infinite alternate;
+}
+img:nth-of-type(1){
+    animation-delay: 0s;
+}
+img:nth-of-type(2){
+    animation-delay: 3s;
+}
+img:nth-of-type(3){
+    animation-delay: 6 s;
+}
+img:nth-of-type(3){
+    animation-delay: 9 s;
 }
