@@ -1,55 +1,27 @@
+/* Reset Default Margins and Paddings */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Candara;
+    font-family: Candara, sans-serif;
 }
 
+/* Container to Keep the Slideshow in Half the Page */
 .container {
-    height: 50vh; /* Half-page height */
+    height: 50vh; /* Half of the screen */
     width: 100%;
-    position: relative; /* Ensures contained elements stay inside */
-    overflow: hidden; /* Prevents images from overflowing */
-}
-
-#header {
     position: relative;
-    z-index: 100;
+    overflow: hidden;
 }
 
-.overlay {
-    background-color: rgba(0, 0, 0, 0.5);
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 10;
-}
-
-/* Slideshow container */
+/* Slideshow Styling */
 .slideshow {
     height: 100%;
     width: 100%;
-    position: relative; /* Keeps images inside container */
+    position: relative;
 }
 
-@keyframes fade {
-    0% {
-        opacity: 1;
-    }
-    33% {
-        opacity: 0;
-    }
-    66% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-/* Adjust images */
+/* Style for Images */
 .slideshow img {
     width: 100%;
     height: 100%;
@@ -57,15 +29,30 @@
     position: absolute;
     top: 0;
     left: 0;
-    animation: fade 9s ease-in-out infinite alternate;
+    opacity: 0; /* Hide all images initially */
+    transition: opacity 1s ease-in-out;
 }
 
+/* Apply Fade Animation */
 img:nth-of-type(1) {
-    animation-delay: 0s;
+    animation: fade 9s infinite alternate;
+    opacity: 1; /* First image visible initially */
 }
+
 img:nth-of-type(2) {
+    animation: fade 9s infinite alternate;
     animation-delay: 3s;
 }
+
 img:nth-of-type(3) {
-    animation-delay: 6s; /* Fixed incorrect space */
+    animation: fade 9s infinite alternate;
+    animation-delay: 6s;
+}
+
+/* Keyframes for Fade Effect */
+@keyframes fade {
+    0% { opacity: 1; }
+    33% { opacity: 0; }
+    66% { opacity: 0; }
+    100% { opacity: 1; }
 }
