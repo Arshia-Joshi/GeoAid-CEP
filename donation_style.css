@@ -5,10 +5,13 @@
     box-sizing: border-box;
 }
 
-/* General Styling */
+
 body {
     font-family: Candara, sans-serif;
-    background-color: #c5c885 !important;
+    background-image:url('photos_bg/wall1.jpg') !important;
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
 }
 
 /* Navbar Styling */
@@ -74,3 +77,15 @@ h1 {
     color: #20576e;
 }
 
+.donation-info {
+    max-width: 800px;
+    font-size: 18px;
+    line-height: 1.8;
+    color:#20576e; ;
+}
+
+.highlight {
+    font-weight: bold;
+    color: #20576e;
+    text-transform: uppercase;
+}
