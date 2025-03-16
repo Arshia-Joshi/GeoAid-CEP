@@ -6,21 +6,66 @@
     <title>Donation</title>
     <link rel="stylesheet" href="donation_style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+        }
+
+        .donation-box {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .donation-title {
+            font-weight: bold;
+            color: #20576e;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .form-check-label {
+            margin-left: 5px;
+        }
+
+        .qr-code {
+            width: 100%;
+            max-width: 200px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .btn-donate {
+            background-color: #20576e;
+            border: none;
+        }
+
+        .btn-donate:hover {
+            background-color: #184856;
+        }
+    </style>
 </head>
 <body>
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg custom-navbar">
         <div class="container">
-            <a class="navbar-brand" href="#">DonateNow</a>
+            <a class="navbar-brand" href="#">Donate Now!</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Donation</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Volunteering</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Live Updates</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Resource Allocation</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
                 </ul>
             </div>
         </div>
@@ -38,10 +83,84 @@
 
     <!-- Why Donate Section -->
     <section class="text-center mt-5">
-        <h1>Why Donate?</h1>
-        <p class="px-3">Your donation can make a difference in someone's life. Every contribution helps provide food, shelter, and medical care to those in need.</p>
-        <a href="#" class="btn btn-primary mt-3">Donate Now</a>
+        <h1>Why Donate?</h1><br>
+        <p style="color: #154256;">Disasters can strike at any moment, leaving communities devastated and in urgent need of help. GeoAid is committed to providing rapid and effective disaster relief, delivering food, medical aid, shelter, and rescue assistance to those affected. Your donation can make a direct impact by ensuring that life-saving resources reach those who need them the most.<br><br> With a strong focus on transparency, every contribution goes directly toward relief efforts, maximizing its effectiveness. GeoAid not only provides immediate aid but also helps communities rebuild through sustainable recovery solutions. By leveraging technology, we optimize disaster response for faster and more efficient support.<br><br> Your generosity can save lives, bring hope, and help those in crisis recover. Join us in making a difference—donate today!
+        </p>
     </section>
+
+    <!-- Donation Form -->
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <!-- Donation Frequency Box -->
+            <div class="col-md-4">
+                <div class="donation-box">
+                    <h4 class="donation-title">How Often Would You Like to Donate?</h4>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="donationType" id="oneTime">
+                        <label class="form-check-label" for="oneTime">One-Time</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="donationType" id="monthly">
+                        <label class="form-check-label" for="monthly">Monthly</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="donationType" id="yearly">
+                        <label class="form-check-label" for="yearly">Yearly</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal Details Box -->
+            <div class="col-md-4">
+                <div class="donation-box">
+                    <h4 class="donation-title">Your Personal Details</h4>
+                    <form>
+                        <div class="mb-2">
+                            <input type="email" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="mb-2">
+                            <input type="text" class="form-control" placeholder="Phone Number" required>
+                        </div>
+                        <div class="mb-2">
+                            <input type="text" class="form-control" placeholder="Address" required>
+                        </div>
+                        <div class="mb-2">
+                            <input type="text" class="form-control" placeholder="Postcode" required>
+                        </div>
+                        <div class="mb-2">
+                            <input type="text" class="form-control" placeholder="City" required>
+                        </div>
+                        <div class="mb-2">
+                            <input type="text" class="form-control" placeholder="Country" required>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Payment Box -->
+            <div class="col-md-4">
+                <div class="donation-box">
+                    <h4 class="donation-title">Payment Details</h4>
+                    <form>
+                        <div class="mb-2">
+                            <input type="text" class="form-control" placeholder="Card Number" required>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="text" class="form-control" placeholder="Expiry Date" required>
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" placeholder="CVV" required>
+                            </div>
+                        </div>
+                    </form>
+                    <h6 class="mt-3 text-center">Or Scan QR to Donate</h6>
+                    <img src="photos_bg/paymentQr.jpg" alt="QR Code" class="qr-code">
+                    <button class="btn btn-donate w-100 mt-3 text-white">Donate Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="donation_script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

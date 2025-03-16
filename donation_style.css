@@ -8,7 +8,7 @@
 /* General Styling */
 body {
     font-family: Candara, sans-serif;
-    background-color: #c5c885;
+    background-color: #c5c885 !important;
 }
 
 /* Navbar Styling */
@@ -74,12 +74,3 @@ h1 {
     color: #20576e;
 }
 
-/* Donate Button */
-.btn-primary {
-    background-color: #20576e;
-    border: none;
-}
-
-.btn-primary:hover {
-    background-color: #184856;
-}
