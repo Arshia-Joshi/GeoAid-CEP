@@ -9,5 +9,5 @@ function showSlides() {
     currentIndex = (currentIndex + 1) % slides.length;
 }
 
-showSlides(); // Show the first image
-setInterval(showSlides, 3000); // Change image every 3 seconds
+showSlides(); 
+setInterval(showSlides, 3000); 

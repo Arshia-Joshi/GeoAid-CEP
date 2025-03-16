@@ -6,18 +6,18 @@
 
 body {
     font-family: Candara, sans-serif;
-    background-color: #222;
+    background-color: #b5ddad;
 }
 
 .container {
     width: 100%;
-    height: 50vh; /* Half of the viewport height */
+    height: 80vh; 
     position: relative;
-    overflow: hidden; /* Prevents overflow of images */
+    overflow: hidden;
 }
 
 .overlay {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0,0,0 0);
     height: 100%;
     width: 100%;
     position: absolute;
@@ -47,4 +47,7 @@ body {
 
 .slide.active {
     opacity: 1;
+}
+h1{
+    color:#20576e
 }
