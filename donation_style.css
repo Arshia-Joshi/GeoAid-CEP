@@ -8,10 +8,8 @@
 
 body {
     font-family: Candara, sans-serif;
-    background-image:url('photos_bg/wall1.jpg') !important;
+    background-image: url('photos_bg/wall2.jpg');
     background-size: cover; 
-    background-position: center; 
-    background-repeat: no-repeat; 
 }
 
 /* Navbar Styling */

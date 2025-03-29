@@ -1,0 +1,60 @@
+/* Global Styling */
+body {
+    background-image: url('photos_bg/wall1.jpg');
+    min-height:100vh;
+    background-size:cover;
+    font-family: Arial, sans-serif;
+}
+
+/* Navbar Styling */
+
+.custom-navbar {
+    background-color: #20576e !important; /* Custom navbar color */
+    padding: 5px 10px;  /* Reduce top-bottom padding */
+    height: 60px;  /* Adjust height */
+}
+
+.custom-navbar .navbar-brand,
+.custom-navbar .nav-link {
+    color: white !important; /* Ensure text is visible */
+}
+
+.custom-navbar .nav-link:hover {
+    color: #f8d210 !important; /* Highlight effect */
+}
+
+/* Slideshow (Bootstrap Carousel) */
+.carousel {
+    max-height: 60vh;
+    overflow: hidden;
+}
+
+.carousel img {
+    width: 100%;
+    height: 50vh;
+    object-fit: cover;
+}
+
+/* Resource Box */
+.resource-box {
+    background: rgb(169, 214, 177);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Resource Title */
+.resource-title {
+    font-weight: bold;
+    color: #20576e;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Left Image */
+.left-image {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+}
