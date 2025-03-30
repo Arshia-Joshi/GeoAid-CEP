@@ -1,5 +1,1535 @@
-<html>
-    <body>
-        <h1> volunteering</h1>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geo-Aid Volunteer Portal</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #57b7f8;
+            --primary-dark: #0f344c;
+            --secondary: #f63c28;
+            --accent: #f7c87d;
+            --light: #ecf0f1;
+            --dark: #e359fb;
+            --success: #77f3ab;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: rgb(249, 243, 243);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(157, 213, 251, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            transition: all 0.4s ease-out;
+            z-index: -1;
+            border-radius: 50px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(155, 209, 245, 0.4);
+        }
+
+        .btn:hover::before {
+            width: 100%;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .bg-animation li {
+            position: absolute;
+            display: block;
+            list-style: none;
+            width: 20px;
+            height: 20px;
+            background: rgba(46, 134, 193, 0.1);
+            animation: animate 25s linear infinite;
+            bottom: -150px;
+            border-radius: 50%;
+        }
+
+        .bg-animation li:nth-child(1) {
+            left: 25%;
+            width: 80px;
+            height: 80px;
+            animation-delay: 0s;
+            animation-duration: 20s;
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        .bg-animation li:nth-child(2) {
+            left: 10%;
+            width: 20px;
+            height: 20px;
+            animation-delay: 2s;
+            animation-duration: 25s;
+            background: rgba(243, 156, 18, 0.1);
+        }
+
+        .bg-animation li:nth-child(3) {
+            left: 70%;
+            width: 40px;
+            height: 40px;
+            animation-delay: 4s;
+            animation-duration: 18s;
+            background: rgba(39, 174, 96, 0.1);
+        }
+
+        .bg-animation li:nth-child(4) {
+            left: 40%;
+            width: 60px;
+            height: 60px;
+            animation-delay: 0s;
+            animation-duration: 15s;
+            background: rgba(46, 134, 193, 0.1);
+        }
+
+        .bg-animation li:nth-child(5) {
+            left: 65%;
+            width: 30px;
+            height: 30px;
+            animation-delay: 0s;
+            animation-duration: 12s;
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        @keyframes animate {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: rgba(255, 255, 255, 0.98);
+            padding: 5px 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            color: var(--secondary);
+            margin-left: 5px;
+        }
+
+        .logo::before {
+            content: '';
+            margin-right: 10px;
+            font-size: 32px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+            position: relative;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 8px 0;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://source.unsplash.com/random/1600x900/?disaster-relief') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            margin-top: 0;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.7), rgba(46, 134, 193, 0.7));
+            mix-blend-mode: multiply;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-btn {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .hero-btn::before {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .scroll-down::after {
+            content: '';
+            width: 20px;
+            height: 30px;
+            border: 2px solid white;
+            border-radius: 50px;
+            margin-top: 10px;
+            position: relative;
+        }
+
+        .scroll-down::before {
+            content: '';
+            width: 4px;
+            height: 8px;
+            background: white;
+            border-radius: 4px;
+            position: absolute;
+            bottom: 10px;
+            animation: scrollDown 2s infinite;
+        }
+
+        @keyframes scrollDown {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(15px);
+                opacity: 0;
+            }
+        }
+
+        /* Why Volunteer Section */
+        .why-volunteer {
+            background: linear-gradient(135deg, #fbee89, #9ff8ab);
+            position: relative;
+        }
+
+        .section-image {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: url('https://source.unsplash.com/random/600x600/?volunteers') no-repeat center center/cover;
+            border-radius: 50%;
+            top: -150px;
+            right: -150px;
+            z-index: 1;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+        }
+
+        .benefits {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        .benefit {
+            flex-basis: calc(50% - 20px);
+            margin-bottom: 40px;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .benefit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .benefit:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .benefit:hover::before {
+            width: 100%;
+            opacity: 0.05;
+        }
+
+        .benefit h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .benefit h3::before {
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 1.8rem;
+        }
+
+        .benefit:nth-child(1) h3::before {
+            content: '🌟';
+        }
+
+        .benefit:nth-child(2) h3::before {
+            content: '🎓';
+        }
+
+        .benefit:nth-child(3) h3::before {
+            content: '🤝';
+        }
+
+        .benefit:nth-child(4) h3::before {
+            content: '📱';
+        }
+
+        /* Volunteer Roles Section */
+        .roles {
+            background: linear-gradient(135deg, #f39780, #f3df87);
+            position: relative;
+        }
+
+        .roles::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232e86c1' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .role-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+            margin-top: 40px;
+            perspective: 1000px;
+        }
+
+        .role-card {
+            flex-basis: calc(33.333% - 20px);
+            background: rgb(248, 247, 246);
+            border-radius: 15px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            z-index: 1;
+        }
+
+        .role-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .role-card:hover {
+            transform: translateY(-15px) rotateY(10deg);
+            box-shadow: -10px 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .role-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .role-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+        }
+
+        .role-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .role-icon::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: rgba(46, 134, 193, 0.1);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0.7;
+            }
+            70% {
+                transform: translate(-50%, -50%) scale(1.1);
+                opacity: 0.3;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0.7;
+            }
+        }
+
+        /* How to Get Involved Section */
+        .how-to {
+            background-color: white;
+            position: relative;
+        }
+
+        .how-to::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: url('https://source.unsplash.com/random/600x600/?teamwork') no-repeat center center/cover;
+            border-radius: 50% 0 0 0;
+            z-index: 1;
+            box-shadow: -10px -10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .steps {
+            counter-reset: step-counter;
+            margin-top: 40px;
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 30px;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            border-radius: 4px;
+        }
+
+        .step {
+            display: flex;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number {
+            flex: 0 0 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: rgb(22, 21, 21);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 600;
+            margin-right: 30px;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 10px 20px rgba(46, 134, 193, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .step:hover .step-number {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 15px 30px rgba(46, 134, 193, 0.4);
+        }
+
+        .step-content {
+            flex: 1;
+            background: linear-gradient(135deg, #c2dcf6, #f5c991);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            transform: perspective(1000px) rotateX(0deg);
+            transform-origin: top;
+        }
+
+        .step:hover .step-content {
+            transform: perspective(1000px) rotateX(2deg);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-content h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonials::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .testimonials::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+        }
+
+        .testimonials h2 {
+            color: white;
+        }
+
+        .testimonials h2::after {
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+        }
+
+        .testimonial-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+            margin-top: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-card {
+            flex-basis: calc(50% - 15px);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            transform: perspective(1000px) rotateY(0deg);
+            transform-origin: center;
+        }
+
+        .testimonial-card:hover {
+            transform: perspective(1000px) rotateY(5deg);
+            box-shadow: -10px 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 120px;
+            line-height: 1;
+            font-family: Georgia, serif;
+            color: rgba(255, 255, 255, 0.1);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .testimonial-author::before {
+            content: '';
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .testimonial-card:nth-child(1) .testimonial-author::before {
+            background-image: url('https://source.unsplash.com/random/100x100/?man');
+        }
+
+        .testimonial-card:nth-child(2) .testimonial-author::before {
+            background-image: url('https://source.unsplash.com/random/100x100/?woman');
+        }
+
+        .testimonial-role {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        /* Registration Form Section */
+        .registration {
+            background-color: rgb(221, 190, 248);
+            position: relative;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgb(245, 243, 246);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+        }
+
+        .form-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: url('https://source.unsplash.com/random/400x400/?volunteer') no-repeat center center/cover;
+            border-radius: 50% 0 0 0;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: #f9f9f9;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(46, 134, 193, 0.2);
+            outline: none;
+            background-color: white;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .form-container .btn {
+            margin-top: 20px;
+            width: 100%;
+            padding: 16px;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* 3D Form Effect */
+        .form-3d-container {
+            perspective: 1000px;
+        }
+
+        .form-3d {
+            transition: transform 0.5s ease;
+            transform-style: preserve-3d;
+        }
+
+        .form-3d:hover {
+            transform: rotateX(2deg) rotateY(-2deg);
+        }
+
+        /* FAQ Section */
+        .faq {
+            background: linear-gradient(135deg, #f6f9fc, #edf3f8);
+            position: relative;
+        }
+
+        .faq::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232e86c1' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .faq-items {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            padding: 0;
+            background: linear-gradient(135deg, #f3f89e, #f38c72);;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .faq-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-question {
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin: 0;
+            padding: 20px 25px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question::after {
+            content: '+';
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .faq-item.active .faq-question::after {
+            content: '-';
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 25px 20px;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--dark), #1a2530);
+            color: white;
+            padding: 80px 0 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-column {
+            flex-basis: calc(33.333% - 30px);
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 25px;
+            font-size: 20px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
+
+        .footer-column p, .footer-column a {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+            display: block;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .footer-column p:before, .footer-column a:before {
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+
+        .footer-column p:nth-child(2):before {
+            content: '📧';
+        }
+
+        .footer-column p:nth-child(3):before {
+            content: '📞';
+        }
+
+        .footer-column p:nth-child(4):before {
+            content: '🏢';
+        }
+
+        .footer-column a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            z-index: -1;
+            opacity: 0;
+            transition: all 0.3s ease;
+            transform: scale(0);
+            border-radius: 50%;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-icon:hover::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 3D Floating Elements */
+        .floating-element {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            animation: float 10s ease-in-out infinite;
+            backdrop-filter: blur(5px);
+            z-index: 0;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            width: 80px;
+            height: 80px;
+            animation-delay: 0s;
+            background: rgba(231, 76, 60, 0.1);
+            transform: rotate(15deg);
+        }
+
+        .floating-element:nth-child(2) {
+            top: 40%;
+            right: 10%;
+            width: 120px;
+            height: 120px;
+            animation-delay: 2s;
+            background: rgba(46, 134, 193, 0.1);
+            transform: rotate(45deg);
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 30%;
+            left: 20%;
+            width: 150px;
+            height: 150px;
+            animation-delay: 4s;
+            background: rgba(243, 156, 18, 0.1);
+            transform: rotate(30deg);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .benefit, .role-card {
+                flex-basis: calc(50% - 15px);
+            }
+
+            .section-image {
+                width: 200px;
+                height: 200px;
+                top: -100px;
+                right: -100px;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .benefit, .role-card, .testimonial-card, .footer-column {
+                flex-basis: 100%;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .section-image {
+                display: none;
+            }
+
+            .how-to::after {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Geo<span>Aid</span></div>
+                <ul class="nav-links">
+                    <li><a href="#why-volunteer">Why Volunteer</a></li>
+                    <li><a href="#roles">Volunteer Roles</a></li>
+                    <li><a href="#how-to">How to Join</a></li>
+                    <li><a href="#register">Register</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Join the Movement. Make a Difference.</h1>
+                <p>Be a part of Geo-Aid's mission to support communities in times of crisis. Register as a volunteer and help us make a real impact.</p>
+                <a href="#register" class="btn hero-btn">Become a Volunteer</a>
+            </div>
+        </div>
+        <a href="#why-volunteer" class="scroll-down">Scroll Down</a>
+    </section>
+
+    <!-- Why Volunteer Section -->
+    <section class="why-volunteer" id="why-volunteer">
+        <div class="section-image"></div>
+        <div class="container">
+            <h2>Why Volunteer with Us?</h2>
+            <div class="benefits">
+                <div class="benefit">
+                    <h3>Make a Real Difference</h3>
+                    <p>Use your skills to support communities affected by disasters and make a tangible impact on people's lives.</p>
+                </div>
+                <div class="benefit">
+                    <h3>Gain Experience</h3>
+                    <p>Get hands-on training and field experience in crisis management, developing valuable skills for your future.</p>
+                </div>
+                <div class="benefit">
+                    <h3>Be Part of a Network</h3>
+                    <p>Join thousands of dedicated volunteers making an impact across India, creating lasting connections.</p>
+                </div>
+                <div class="benefit">
+                    <h3>Stay Informed</h3>
+                    <p>Access real-time data and updates during emergency situations, helping you make informed decisions.</p>
+                </div>
+            </div>
+        </div>
+        <ul class="bg-animation">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </section>
+
+    <!-- Volunteer Roles Section -->
+    <section class="roles" id="roles">
+        <div class="container">
+            <h2>Volunteer Roles</h2>
+            <p class="text-center">Find the perfect role that matches your skills and interests</p>
+            <div class="role-cards">
+                <div class="role-card">
+                    <div class="role-icon">📊</div>
+                    <h3>Data Collector</h3>
+                    <p>Gather real-time information from affected areas to help coordinate relief efforts effectively.</p>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon">🗺️</div>
+                    <h3>Mapping Assistant</h3>
+                    <p>Help analyze and update crisis maps to provide visual guidance for emergency response teams.</p>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon">👥</div>
+                    <h3>Community Coordinator</h3>
+                    <p>Organize local support and logistics to ensure resources reach those who need them most.</p>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon">📱</div>
+                    <h3>Social Media Advocate</h3>
+                    <p>Spread awareness and updates on social platforms to keep the public informed during crises.</p>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon">💻</div>
+                    <h3>Technical Support</h3>
+                    <p>Assist in maintaining and updating our tech platforms to ensure smooth operations during emergencies.</p>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon">🛠️</div>
+                    <h3>Field Volunteer</h3>
+                    <p>Work directly in affected areas providing hands-on assistance to communities in need.</p>
+                </div>
+            </div>
+        </div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </section>
+
+    <!-- How to Get Involved Section -->
+    <section class="how-to" id="how-to">
+        <div class="container">
+            <h2>How to Get Involved</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Register Online</h3>
+                        <p>Fill out the application form with your basic details and skills to begin your volunteer journey.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Training & Onboarding</h3>
+                        <p>Attend an online orientation and complete training modules to prepare for your volunteer role.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Join a Local Team</h3>
+                        <p>Get connected with coordinators in your area to become part of a dedicated local volunteer group.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Start Volunteering</h3>
+                        <p>Participate in data collection, community support, or coordination efforts based on your skills and interests.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <h2>Success Stories</h2>
+            <div class="testimonial-cards">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Volunteering with Geo-Aid gave me the chance to truly make an impact. During the recent floods, our team was able to provide real-time updates that helped save lives."</p>
+                    <div class="testimonial-author">
+                        <div>
+                            <p>Ravi Shankar</p>
+                            <p class="testimonial-role">Community Coordinator</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Being part of the data analysis team has enhanced my skills and given me a sense of purpose. It's great to see our efforts making a difference."</p>
+                    <div class="testimonial-author">
+                        <div>
+                            <p>Sana Khan</p>
+                            <p class="testimonial-role">Data Analyst</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Form Section -->
+    <section class="registration" id="register">
+        <div class="container">
+            <h2>Register as a Volunteer</h2>
+            <p class="text-center">Join our network of dedicated volunteers making a difference</p>
+            <div class="form-3d-container">
+                <div class="form-container form-3d">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="age">Age</label>
+                                <input type="number" id="age" min="18" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Contact Number</label>
+                                <input type="tel" id="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="skills">Skillset/Area of Expertise</label>
+                            <input type="text" id="skills" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="role">Preferred Role</label>
+                                <select id="role" required>
+                                    <option value="">Select a role</option>
+                                    <option value="data-collector">Data Collector</option>
+                                    <option value="mapping-assistant">Mapping Assistant</option>
+                                    <option value="community-coordinator">Community Coordinator</option>
+                                    <option value="social-media">Social Media Advocate</option>
+                                    <option value="technical-support">Technical Support</option>
+                                    <option value="field-volunteer">Field Volunteer</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="availability">Availability</label>
+                                <select id="availability" required>
+                                    <option value="">Select availability</option>
+                                    <option value="full-time">Full-time</option>
+                                    <option value="part-time">Part-time</option>
+                                    <option value="occasional">Occasional</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="emergency-contact">Emergency Contact</label>
+                            <input type="text" id="emergency-contact" required>
+                        </div>
+                        <button type="submit" class="btn">Join Us Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-items">
+                <div class="faq-item">
+                    <div class="faq-question">How do I register?</div>
+                    <div class="faq-answer">Simply fill out the form above and our team will get in touch with you within 48 hours.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Is there any training required?</div>
+                    <div class="faq-answer">Yes, we provide comprehensive online training modules for all volunteers to ensure you're well-prepared.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Can I volunteer remotely?</div>
+                    <div class="faq-answer">Yes, some roles like data analysis and social media advocacy can be done remotely from anywhere.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">How much time do I need to commit?</div>
+                    <div class="faq-answer">It depends on your availability. We have options for full-time, part-time, and occasional volunteers.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Geo-Aid</h3>
+                    <p>Geo-Aid is a non-profit organization dedicated to providing support during natural disasters and humanitarian crises across India.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <p>volunteer@geo-aid.org</p>
+                    <p>+91-XXXXXXXXXX</p>
+                    <p>123 Relief Road, New Delhi, India</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-icon">FB</a>
+                        <a href="#" class="social-icon">TW</a>
+                        <a href="#" class="social-icon">IG</a>
+                        <a href="#" class="social-icon">LI</a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Geo-Aid. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple JavaScript for interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Header scroll effect
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('header');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // FAQ accordion
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                });
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
 </html>
