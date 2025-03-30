@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - GEO-AID</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            color: #1d1c1c;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: #f3dc5b;
+            perspective: 1000px;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #da935d;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #69cae0;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #69bbf1;
+        }
+
+        /* Hero section with video background and 3D elements */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(89, 193, 235, 0.7) 100%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: rgb(31, 26, 26);
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 12rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            position: relative;
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-content h1::after {
+            content: 'Us';
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: rgba(255, 255, 255, 0.3);
+            transform: translateZ(-10px);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotateX(0deg); }
+            50% { transform: translateY(-20px) rotateX(5deg); }
+        }
+
+        /* 3D Disaster Elements */
+        .disaster-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .disaster {
+            position: absolute;
+            transform-style: preserve-3d;
+        }
+
+        .hurricane {
+            width: 150px;
+            height: 150px;
+            top: 15%;
+            left: 10%;
+            animation: spin 20s linear infinite;
+        }
+
+        .hurricane::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="white" d="M50 10c22.1 0 40 17.9 40 40S72.1 90 50 90 10 72.1 10 50s17.9-40 40-40zm0 10c-16.6 0-30 13.4-30 30s13.4 30 30 30 30-13.4 30-30-13.4-30-30-30zm0 10c11 0 20 9 20 20s-9 20-20 20-20-9-20-20 9-20 20-20zm0 10c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10z"/></svg>') center/contain no-repeat;
+            opacity: 0.7;
+        }
+
+        .earthquake {
+            width: 200px;
+            height: 50px;
+            bottom: 20%;
+            right: 15%;
+            animation: shake 5s ease-in-out infinite;
+        }
+
+        .earthquake::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50"><path fill="white" d="M0 25 L20 15 L40 35 L60 5 L80 30 L100 10 L120 40 L140 20 L160 25 L180 15 L200 25"/></svg>') center/contain no-repeat;
+            opacity: 0.7;
+        }
+
+        .flood {
+            width: 180px;
+            height: 80px;
+            bottom: 10%;
+            left: 20%;
+            animation: wave 8s ease-in-out infinite;
+        }
+
+        .flood::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 80"><path fill="white" d="M0 40 Q22.5 20, 45 40 Q67.5 60, 90 40 Q112.5 20, 135 40 Q157.5 60, 180 40 L180 80 L0 80 Z"/></svg>') center/contain no-repeat;
+            opacity: 0.7;
+        }
+
+        .fire {
+            width: 100px;
+            height: 150px;
+            top: 20%;
+            right: 10%;
+            animation: flicker 3s ease-in-out infinite alternate;
+        }
+
+        .fire::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 150"><path fill="orange" d="M50 0 Q60 50, 80 60 Q60 70, 70 100 Q50 85, 30 100 Q40 70, 20 60 Q40 50, 50 0"/></svg>') center/contain no-repeat;
+            opacity: 0.7;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg) translateZ(20px); }
+            100% { transform: rotate(360deg) translateZ(20px); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0) translateZ(10px); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px) translateZ(10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px) translateZ(10px); }
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateY(0) translateZ(15px); }
+            50% { transform: translateY(-20px) translateZ(15px); }
+        }
+
+        @keyframes flicker {
+            0%, 100% { transform: scale(1) translateZ(25px); opacity: 0.8; }
+            25% { transform: scale(0.95) translateZ(25px); opacity: 0.7; }
+            50% { transform: scale(1.05) translateZ(25px); opacity: 0.9; }
+            75% { transform: scale(0.97) translateZ(25px); opacity: 0.8; }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgb(237, 72, 72);
+            text-align: center;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator i {
+            font-size: 2rem;
+            display: block;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-20px) translateX(-50%); }
+            60% { transform: translateY(-10px) translateX(-50%); }
+        }
+
+        /* Section styles with 3D effects */
+        section {
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: #346f16;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #9eb9e5, transparent);
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        /* Our centers section with 3D cards */
+        .centers {
+            background-color: #c6f2c0;
+            position: relative;
+        }
+
+        .centers::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="%232a6d7c" opacity="0.1"/></svg>');
+            z-index: 1;
+        }
+
+        .centers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            perspective: 1000px;
+        }
+
+        .center-card {
+            background-color: rgb(243, 195, 141);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+            transform: translateZ(0) rotateX(0) rotateY(0);
+        }
+
+        .center-card:hover {
+            transform: translateZ(20px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .center-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #164853;
+            position: relative;
+        }
+
+        .center-card h3::before {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            top: -10px;
+            left: -10px;
+            border-top: 3px solid #ea0fcd;
+            border-left: 3px solid #e30d0d;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .center-card:hover h3::before {
+            opacity: 1;
+            transform: translateX(-5px) translateY(-5px);
+        }
+
+        /* What we do section with 3D parallax */
+        .what-we-do {
+            background: linear-gradient(135deg, #efdc8d 0%, #dc884f 100%);
+            color: rgb(23, 6, 6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .parallax-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .parallax-item {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .p1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            left: -100px;
+        }
+
+        .p2 {
+            width: 200px;
+            height: 200px;
+            bottom: -50px;
+            right: -50px;
+        }
+
+        .p3 {
+            width: 150px;
+            height: 150px;
+            top: 50%;
+            right: 10%;
+        }
+
+        .what-we-do h2 {
+            color: rgb(160, 22, 22);
+        }
+
+        .what-we-do h2::after {
+            background: linear-gradient(90deg, rgb(217, 136, 136), transparent);
+        }
+
+        /* Capabilities section with 3D icons */
+        .capabilities {
+            background-color: rgb(146, 233, 207);
+            position: relative;
+        }
+
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            perspective: 1000px;
+        }
+
+        .capability-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 8px;
+            background-color: #b2e5f3;
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .capability-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #9fd5e7 0%, #10155f 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .capability-card:hover::before {
+            opacity: 1;
+        }
+
+        .capability-card:hover {
+            transform: translateZ(30px);
+            color: rgb(241, 196, 196);
+        }
+
+        .capability-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #7feae3;
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+            display: inline-block;
+        }
+
+        .capability-card:hover .capability-icon {
+            color: rgb(40, 68, 10);
+            transform: rotateY(360deg);
+        }
+
+        .capability-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.5s ease;
+        }
+
+        .capability-card p {
+            transition: all 0.5s ease;
+        }
+
+        /* How we work section with 3D timeline */
+        .how-we-work {
+            background-color: #f8f8ab;
+            position: relative;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: linear-gradient(to bottom, #e02938, #f9995e);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            transform-style: preserve-3d;
+            transform: translateZ(-5px);
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            perspective: 1000px;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -12px;
+            background-color: rgb(251, 229, 214);
+            border: 4px solid #67cfe6;
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover::after {
+            background-color: #7bd1e5;
+            transform: scale(1.2);
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .right::after {
+            left: -12px;
+        }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: rgb(199, 196, 240);
+            position: relative;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+            transform: rotateX(0);
+        }
+
+        .timeline-content:hover {
+            transform: rotateX(5deg) translateZ(10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline-content h3 {
+            color: #287f92;
+            margin-bottom: 10px;
+        }
+
+        /* 3D Disaster Models for Timeline */
+        .disaster-model {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            top: 0;
+            transform-style: preserve-3d;
+            z-index: 2;
+        }
+
+        .left .disaster-model {
+            right: -70px;
+        }
+
+        .right .disaster-model {
+            left: -70px;
+        }
+
+        .disaster-alert {
+            width: 100%;
+            height: 100%;
+            background-color: #eab9b4;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .disaster-map {
+            width: 100%;
+            height: 100%;
+            background-color: #3498db;
+            border-radius: 10px;
+            transform: rotateY(45deg);
+            animation: rotate3D 8s infinite linear;
+        }
+
+        .disaster-volunteer {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .disaster-volunteer::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="30" r="20" fill="%232ecc71"/><path d="M30 60 Q50 90 70 60" stroke="%232ecc71" stroke-width="10" fill="none"/></svg>') center/contain no-repeat;
+            animation: bounce 3s infinite;
+        }
+
+        .disaster-resources {
+            width: 100%;
+            height: 100%;
+            background-color: #f1c40f;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            animation: rotate3D 6s infinite alternate;
+        }
+
+        .disaster-support {
+            width: 100%;
+            height: 100%;
+            background-color: #c57ae3;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(45deg);
+            animation: pulse 3s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        @keyframes rotate3D {
+            0% { transform: rotateY(0deg) rotateX(0deg); }
+            50% { transform: rotateY(180deg) rotateX(10deg); }
+            100% { transform: rotateY(360deg) rotateX(0deg); }
+        }
+
+        /* Team section with 3D cards */
+        .team {
+            background-color: rgb(244, 220, 202);
+            position: relative;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            perspective: 1000px;
+        }
+
+        .team-member {
+            text-align: center;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+        }
+
+        .team-member:hover {
+            transform: translateZ(20px);
+        }
+
+        .member-image-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 1rem;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .team-member img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #14441d;
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+        }
+
+        .team-member:hover img {
+            transform: rotateY(10deg) rotateX(10deg);
+            box-shadow: -10px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .member-image-container::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 5px solid rgba(42, 109, 124, 0.3);
+            top: 10px;
+            left: 10px;
+            z-index: -1;
+            transition: all 0.5s ease;
+        }
+
+        .team-member:hover .member-image-container::after {
+            transform: translateZ(-20px);
+        }
+
+        .team-member h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #53b6cc;
+        }
+
+        .team-member p {
+            font-size: 1rem;
+            color: #320303;
+        }
+
+        .team-member .role {
+            font-weight: bold;
+            color: #61c7de;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Reviews section with 3D carousel */
+        .reviews {
+            background-color: #f9f9f9c0;
+            padding-bottom: 8rem;
+            position: relative;
+        }
+
+        .reviews::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><path d="M15 5 L20 20 L5 15 Z" fill="%232a6d7c" opacity="0.05"/></svg>');
+            z-index: 0;
+        }
+
+        .reviews-slider {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            perspective: 1000px;
+            z-index: 1;
+        }
+
+        .reviews-container {
+            display: flex;
+            transition: transform 0.5s ease;
+            transform-style: preserve-3d;
+        }
+
+        .review {
+            min-width: 100%;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+            transform: rotateY(0);
+            transform-style: preserve-3d;
+        }
+
+        .current-review {
+            transform: rotateY(0) translateZ(50px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .review-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .review-text::before {
+            content: '"';
+            font-size: 4rem;
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            color: rgba(227, 237, 116, 0.1);
+            font-family: Georgia, serif;
+        }
+
+        .review-author {
+            font-weight: bold;
+            color: #57ecee;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .review-author::before {
+            content: '';
+            display: inline-block;
+            width: 30px;
+            height: 2px;
+            background-color: #40bb37;
+            margin-right: 10px;
+        }
+
+        .slider-nav {
+            text-align: center;
+            margin-top: 2rem;
+            perspective: 1000px;
+        }
+
+        .slider-nav button {
+            background: linear-gradient(135deg, #2a6d7c 0%, #1d4d59 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            margin: 0 0.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .slider-nav button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%);
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .slider-nav button:hover {
+            transform: translateY(-5px) rotateX(10deg);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .slider-nav button:hover::after {
+            transform: translateY(0);
+        }
+
+        /* 3D Globe in background */
+        .globe-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .globe {
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #2a6d7c, #1d4d59);
+            position: relative;
+            box-shadow: 0 0 100px rgba(42, 109, 124, 0.5);
+            animation: rotateGlobe 60s linear infinite;
+        }
+
+        .globe::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M10,50 Q25,30 40,50 T70,50 T100,50" stroke="rgba(255,255,255,0.3)" fill="none" stroke-width="0.5"/><path d="M10,60 Q25,40 40,60 T70,60 T100,60" stroke="rgba(255,255,255,0.3)" fill="none" stroke-width="0.5"/><path d="M10,70 Q25,50 40,70 T70,70 T100,70" stroke="rgba(255,255,255,0.3)" fill="none" stroke-width="0.5"/><path d="M10,40 Q25,20 40,40 T70,40 T100,40" stroke="rgba(255,255,255,0.3)" fill="none" stroke-width="0.5"/><path d="M10,30 Q25,10 40,30 T70,30 T100,30" stroke="rgba(255,255,255,0.3)" fill="none" stroke-width="0.5"/><path d="M50,10 Q30,25 50,40 T50,70 T50,100" stroke="rgba(255,255,255,0.3)" fill="none" stroke-width="0.5"/><path d="M60,10 Q40,25 60,40 T60,70 T60,100" stroke="rgba(255,255,255  stroke-width="0.5"/><path d="M60,10 Q40,25 60,40 T60,70 T60,100" stroke="rgba(255,255,255,0.3)" fill="none" stroke-width="0.5"/><path d="M70,10 Q50,25 70,40 T70,70 T70,100" stroke="rgba(255,255,255,0.3)" fill="none" stroke-width="0.5"/><path d="M40,10 Q20,25 40,40 T40,70 T40,100" stroke="rgba(255,255,255,0.3)" fill="none" stroke-width="0.5"/><path d="M30,10 Q10,25 30,40 T30,70 T30,100" stroke="rgba(255,255,255,0.3)" fill="none" stroke-width="0.5"/></svg>');
+        }
+
+        @keyframes rotateGlobe {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 6rem;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item::after {
+                left: 18px;
+            }
+
+            .right {
+                left: 0;
+            }
+
+            .left .disaster-model,
+            .right .disaster-model {
+                left: 10px;
+                top: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 3D Globe Background -->
+    <div class="globe-container">
+        <div class="globe"></div>
+    </div>
+
+    <!-- Hero Section with Video Background and 3D Elements -->
+    <section class="hero">
+        <video autoplay muted loop>
+            <source src="CEP VIDEO.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="disaster-elements">
+            <div class="disaster hurricane"></div>
+            <div class="disaster earthquake"></div>
+            <div class="disaster flood"></div>
+            <div class="disaster fire"></div>
+        </div>
+        <div class="hero-content">
+            <h1>"ABOUT US"</h1>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll Down</span>
+            <i>↓</i>
+        </div>
+    </section>
+
+    <!-- Our Centers Section with 3D Cards -->
+    <section class="centers" id="centers">
+        <div class="container">
+            <h2>Our Centers</h2>
+            <div class="centers-grid">
+                <div class="center-card">
+                    <h3>New Delhi HQ</h3>
+                    <p>Geo-Aid’s main headquarters is located in New Delhi, coordinating disaster response across North India. Equipped with state-of-the-art satellite monitoring systems and emergency response teams, we ensure rapid mobilization and efficient crisis management.</p>
+                </div>
+                <div class="center-card">
+                    <h3>South India</h3>
+                    <p>Geo-Aid’s South India center is strategically located in Bengaluru, focusing on coordination with international aid organizations and providing rapid deployment capabilities across the southern region. Our specialized teams are always on standby to respond to emergencies with precision and speed.</p>
+                </div>
+                <div class="center-card">
+                    <h3>East India</h3>
+                    <p>Geo-Aid’s East India center is based in Kolkata, specializing in typhoon and tsunami response. Equipped with advanced early warning systems and specialized water rescue teams, we safeguard vulnerable coastal and riverine communities from natural disasters.</p>
+                </div>
+                <div class="center-card">
+                    <h3>West India </h3>
+                    <p>Geo-Aid’s West India center is located in Pune, focusing on drought relief and humanitarian aid across the western region. Utilizing drone technology to map remote areas and coordinate water distribution, we ensure that assistance reaches even the most isolated communities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We Do Section with 3D Parallax -->
+    <section class="what-we-do" id="what-we-do">
+        <div class="parallax-bg">
+            <div class="parallax-item p1"></div>
+            <div class="parallax-item p2"></div>
+            <div class="parallax-item p3"></div>
+        </div>
+        <div class="container">
+            <h2>What We Do</h2>
+            <p>Geo-Aid leverages advanced technology to provide real-time disaster-related information across India. Our mission is to empower communities and response teams with accurate, up-to-date insights that help in making quick and informed decisions during emergencies.</p>
+            <p>We utilize satellite data, crowd-sourced reports, and AI-driven analysis to create detailed maps and impact assessments. By integrating various data sources, we deliver comprehensive situational awareness, helping authorities and relief organizations prioritize their efforts efficiently.</p>
+            <p>Our platform covers a wide range of disaster scenarios, including floods, cyclones, earthquakes, and landslides. We focus on delivering information through intuitive dashboards and mobile apps, making critical data accessible to both decision-makers and the public.</p>
+            <p>With no reliance on hardware and a purely information-driven approach, Geo-Aid remains agile and cost-effective. By bridging the gap between data and action, we enhance disaster response capabilities, ensuring faster and more coordinated relief efforts across the nation.</p>
+        </div>
+    </section>
+
+    <!-- Our Capabilities Section with 3D Icons -->
+    <section class="capabilities" id="capabilities">
+        <div class="container">
+            <h2>Our Capabilities</h2>
+            <div class="capabilities-grid">
+                <div class="capability-card">
+                    <div class="capability-icon">🌐</div>
+                    <h3>Disaster Information</h3>
+                    <p>Our platform gathers data from satellites, weather stations, and crowd-sourced reports to provide accurate and real-time disaster-related information. This enables authorities and communities to stay updated and respond swiftly.</p>
+                </div>
+                <div class="capability-card">
+                    <div class="capability-icon">🧠</div>
+                    <h3>AI-Driven Impact Assessment</h3>
+                    <p>We use advanced AI algorithms to analyze incoming data and predict the potential impact of disasters. This helps identify high-risk areas, prioritize evacuations, and allocate resources efficiently.</p>
+                </div>
+                <div class="capability-card">
+                    <div class="capability-icon">📊 </div>
+                    <h3>Dynamic Mapping & Visualization</h3>
+                    <p>Our system creates interactive maps that highlight affected regions, road blockages, and safe zones. These maps are accessible through web and mobile interfaces, allowing users to make data-driven decisions during crises.</p>
+                </div>
+                <div class="capability-card">
+                    <div class="capability-icon">📱</div>
+                    <h3>Accessible and User-Friendly Interface</h3>
+                    <p>Our intuitive platform ensures that critical information is easy to access and understand. From government agencies to local communities, everyone can stay informed through our mobile apps and dashboards.</p>
+                </div>
+                <div class="capability-card">
+                    <div class="capability-icon">📡</div>
+                    <h3>Early Warning Systems</h3>
+                    <p>Geo-Aid integrates data from meteorological sources and predictive models to issue early warnings for disasters such as cyclones, floods, and landslides. These timely alerts help communities and authorities prepare in advance, minimizing potential damage and loss of life.</p>
+                </div>
+                <div class="capability-card">
+                    <div class="capability-icon">🔍</div>
+                    <h3>Data Accuracy and Verification</h3>
+                    <p>We prioritize data accuracy by cross-referencing multiple reliable sources and using AI-driven validation techniques. This ensures that the information we provide is precise, credible, and actionable, helping decision-makers make the right calls during emergencies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How We Work Section with 3D Timeline -->
+    <section class="how-we-work" id="how-we-work">
+        <div class="container">
+            <h2>How We Work</h2>
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="disaster-model">
+                        <div class="disaster-alert"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>🚨 Alert & Data Collection</h3>
+                        <p>The moment a disaster is detected or reported, our system instantly gathers data from multiple sources, including satellite imagery, weather reports, and crowd-sourced inputs. This ensures accurate and real-time information about the situation.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="disaster-model">
+                        <div class="disaster-map"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>📊 Data Analysis & Mapping</h3>
+                        <p>Our AI-driven algorithms analyze the collected data to generate impact assessments and create dynamic maps. These visualizations highlight affected areas, safe zones, and potential hazards, enabling precise planning and response.</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="disaster-model">
+                        <div class="disaster-volunteer"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>🔗 Information Dissemination</h3>
+                        <p>The processed information is made accessible through our intuitive platform and mobile apps. We ensure that decision-makers, authorities, and communities receive timely alerts and situational updates to take proactive measures.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="disaster-model">
+                        <div class="disaster-resources"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>🔄 Continuous Monitoring & Updates</h3>
+                        <p>Our system continuously monitors the situation and provides real-time updates, allowing responders to adapt their strategies as conditions evolve. By maintaining accurate and current data, we support effective and coordinated disaster management efforts.</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="disaster-model">
+                        <div class="disaster-support"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>🌍 Collaboration & Coordination</h3>
+                        <p>We work closely with government agencies, NGOs, and local communities to ensure seamless coordination during disaster response. Our platform facilitates real-time communication and data sharing among stakeholders, promoting a unified and efficient approach to crisis management.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership Section with 3D Cards -->
+    <section class="team" id="leadership">
+        <div class="container">
+            <h2>Leadership - Meet the Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-image-container">
+                        <img src="VARDA.jpeg" alt="CEO Portrait">
+                    </div>
+                    <h3>Varda Gachake</h3>
+                    <p class="role">CEO</p>
+                    <p>Disaster management expert with 20 years of experience in crisis coordination and data-driven response strategies. Led international disaster relief efforts and pioneered technology-driven information systems for rapid decision-making.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-image-container">
+                        <img src="SHARWARI.jpeg" alt="CEO Portrait">
+                    </div>
+                    <h3>Sharwari Kathole</h3>
+                    <p class="role">CEO</p>
+                    <p>Operational strategist with a proven track record in emergency planning and resource optimization. Developed streamlined processes to improve the speed and accuracy of disaster-related information dissemination.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-image-container">
+                        <img src="ARSHIA.jpeg" alt="CEO Portrait">
+                    </div>
+                    <h3>Arshia Joshi</h3>
+                    <p class="role">CEO</p>
+                    <p>Tech visionary specializing in data integration and real-time mapping solutions. Innovated AI-driven algorithms that enhance Geo-Aid's ability to predict disaster impact and guide effective response.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-image-container">
+                        <img src="RADHA.jpeg" alt="MENTOR Portrait">
+                    </div>
+                    <h3>Radha Deoghare</h3>
+                    <p class="role">MENTOR</p>
+                    <p>Community engagement leader who built and scaled Geo-Aid’s volunteer network across India. Focused on training and mobilizing local responders to improve grassroots-level disaster readiness.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section with 3D Carousel -->
+    <section class="reviews" id="reviews">
+        <div class="container">
+            <h2>Reviews</h2>
+            <div class="reviews-slider">
+                <div class="reviews-container">
+                    <div class="review">
+                        <p class="review-text">"Geo-Aid has completely transformed how we respond to disasters. Their real-time mapping and data analysis tools have been invaluable in coordinating relief efforts efficiently. During the recent floods, their accurate data helped us prioritize the most affected areas, saving countless lives."</p>
+                        <p class="review-author">- Anjali Mehta, Disaster Response Coordinator</p>
+                    </div>
+                    <div class="review">
+                        <p class="review-text">"As a local government official, I rely on Geo-Aid’s platform to get precise and timely disaster information. Their early warnings and detailed impact assessments during the cyclone season enabled us to take preventive measures and reduce casualties."</p>
+                        <p class="review-author">- Rajesh Patel, Municipal Commissioner</p>
+                    </div>
+                    <div class="review">
+                        <p class="review-text">"Geo-Aid’s technology made a huge difference during the recent landslides. The dynamic maps and real-time updates kept our rescue teams informed and focused on the most critical areas. It’s truly a game-changer for disaster management."</p>
+                        <p class="review-author">- Pooja Reddy, Volunteer Coordinator</p>
+                    </div>
+                </div>
+                <div class="slider-nav">
+                    <button id="prev">Previous</button>
+                    <button id="next">Next</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Parallax effect for background elements
+        window.addEventListener('scroll', function() {
+            const scrollY = window.scrollY;
+            
+            // Parallax for hero section
+            document.querySelectorAll('.disaster').forEach((element, index) => {
+                const speed = 0.1 * (index + 1);
+                element.style.transform = `translateY(${scrollY * speed}px)`;
+            });
+            
+            // Parallax for What We Do section
+            document.querySelectorAll('.parallax-item').forEach((element, index) => {
+                const speed = 0.05 * (index + 1);
+                element.style.transform = `translateY(${scrollY * speed}px)`;
+            });
+        });
+
+        // 3D card effect for center cards
+        document.querySelectorAll('.center-card').forEach(card => {
+            card.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const angleX = (y - centerY) / 20;
+                const angleY = (centerX - x) / 20;
+                
+                this.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg) translateZ(20px)`;
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'rotateX(0) rotateY(0) translateZ(0)';
+            });
+        });
+
+        // Reviews slider functionality with 3D effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.reviews-container');
+            const reviews = document.querySelectorAll('.review');
+            const prevBtn = document.getElementById('prev');
+            const nextBtn = document.getElementById('next');
+            
+            let currentIndex = 0;
+            
+            function showReview(index) {
+                if (index < 0) {
+                    currentIndex = reviews.length - 1;
+                } else if (index >= reviews.length) {
+                    currentIndex = 0;
+                } else {
+                    currentIndex = index;
+                }
+                
+                container.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                // Add 3D effect to current review
+                reviews.forEach((review, i) => {
+                    if (i === currentIndex) {
+                        review.classList.add('current-review');
+                    } else {
+                        review.classList.remove('current-review');
+                    }
+                });
+            }
+            
+            prevBtn.addEventListener('click', () => {
+                showReview(currentIndex - 1);
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                showReview(currentIndex + 1);
+            });
+            
+            // Initialize first review with 3D effect
+            showReview(0);
+            
+            // Auto-rotate reviews every 5 seconds
+            setInterval(() => {
+                showReview(currentIndex + 1);
+            }, 5000);
+        });
+
+        // Create floating 3D disaster objects
+        function createFloatingDisasters() {
+            const disasterTypes = [
+                { name: 'hurricane', emoji: '🌀' },
+                { name: 'earthquake', emoji: '⚡' },
+                { name: 'flood', emoji: '💧' },
+                { name: 'fire', emoji: '🔥' },
+                { name: 'tornado', emoji: '🌪️' },
+                { name: 'volcano', emoji: '🌋' }
+            ];
+            
+            const container = document.createElement('div');
+            container.className = 'floating-disasters';
+            container.style.position = 'fixed';
+            container.style.top = '0';
+            container.style.left = '0';
+            container.style.width = '100%';
+            container.style.height = '100%';
+            container.style.pointerEvents = 'none';
+            container.style.zIndex = '-1';
+            container.style.opacity = '0.1';
+            
+            for (let i = 0; i < 15; i++) {
+                const disaster = document.createElement('div');
+                const randomType = disasterTypes[Math.floor(Math.random() * disasterTypes.length)];
+                
+                disaster.textContent = randomType.emoji;
+                disaster.className = `floating-disaster ${randomType.name}`;
+                disaster.style.position = 'absolute';
+                disaster.style.fontSize = `${Math.random() * 20 + 10}px`;
+                disaster.style.left = `${Math.random() * 100}%`;
+                disaster.style.top = `${Math.random() * 100}%`;
+                disaster.style.animation = `float ${Math.random() * 10 + 5}s ease-in-out infinite alternate, spin ${Math.random() * 20 + 10}s linear infinite`;
+                
+                container.appendChild(disaster);
+            }
+            
+            document.body.appendChild(container);
+        }
+        
+        createFloatingDisasters();
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 3D rotation effect for capability icons
+        document.querySelectorAll('.capability-icon').forEach(icon => {
+            icon.addEventListener('mouseover', function() {
+                this.style.transform = 'rotateY(180deg)';
+            });
+            
+            icon.addEventListener('mouseout', function() {
+                this.style.transform = 'rotateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
