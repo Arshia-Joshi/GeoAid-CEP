@@ -3,88 +3,440 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoAid - Donate</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>GeoAid Donation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f3ebd2;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Slideshow Styling */
+        .slideshow-container {
+            max-width: 100%;
+            height:50vh;
+            position: relative;
+            margin: auto;
+            overflow: hidden
+        }
+        .slides {
+            display: none;
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* Why Donate Section */
+    .why-donate-section {
+        text-align: center;
+        padding: 50px;
+        background: linear-gradient(to right, #f6f3bc, #c2f0a3);
+        border-radius: 10px;
+    }
+
+    .why-donate-section h2 {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .donate-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .donate-box {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .donate-box:hover {
+        transform: translateY(-5px);
+    }
+
+    .donate-box h3 {
+        font-size: 1.2rem;
+        color: #4a90e2;
+        display: flex;
+        align-items: center;
+    }
+
+    .donate-box h3::before {
+        content: ' ';
+        margin-right: 8px;
+    }
+
+    .donate-box p {
+        color: #7c7c7c;
+        font-size: 1rem;
+    }
+
+    .transparency {
+        margin-top: 20px;
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+
+
+        /* Donation Forms */
+    .donation-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin: 40px auto;
+        flex-wrap: wrap;
+    }
+    .donation-box {
+        width: 300px;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+        text-align: left;
+        margin-bottom: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .donation-box:hover {
+        transform: rotateX(5deg) rotateY(5deg);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    .donation-box input, .donation-box select {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        appearance: none; 
+    }
+    
+    .donation-box button {
+        width: 100%;
+        padding: 10px;
+        background: #FF6600;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+        /* Flowchart */
+    .flowchart {
+        width: 80%;
+        margin: 50px auto;
+        background: #C4E7D4;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+        margin-bottom: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .flowchart:hover{
+        transform: rotateX(5deg) rotateY(5deg);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    .flowchart h3 {
+        color: #333;
+        font-size: 22px;
+    }
+    .flowchart ul {
+        list-style: none;
+        padding: 0;
+    }
+    .flowchart li {
+        background: white;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+    }
+
+        /* Donate Goods Form */
+    .donate-goods {
+        width: 50%;
+        margin: 40px auto;
+        background: rgb(241, 177, 177);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+        margin-bottom: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .donate-goods:hover{
+        transform: rotateX(5deg) rotateY(5deg);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+
+    }
+    .donate-goods textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .donate-goods button{
+        width: 100%;
+        padding: 10px;
+        background: #b8c3f1;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    .custom-navbar {
+        background-color: #20576e !important;
+        padding: 10px 20px;
+    }
+    .geo-aid-logo {
+        font-size: 22px;
+        font-weight: bold;
+        color: white !important;
+        text-decoration: none;
+        margin-right: auto;
+    }
+    /* Navbar Links */
+    .custom-navbar .navbar-nav {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+        margin-left:auto
+    }
+
+    .custom-navbar .nav-link {
+        color: white !important;
+        font-size: 16px;
+        text-decoration: none !important; 
+        transition: color 0.3s;
+        list-style:none;
+    }
+    .custom-navbar .ms-auto {
+        margin-left: auto !important;  /* Moves the menu to the right */
+    }
+
+    .custom-navbar .nav-link:hover {
+        color: #f8d210 !important;
+        transition: color 0.3s;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+        .custom-navbar .navbar-nav {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+    .qr {
+    text-align: center;
+    margin-top: 20px;
+    }
+
+    .qr-code {
+        width: 250px;  /* Adjust size */
+        height: auto;
+        display: block;
+        margin: 10px auto; /* Centering */
+    }
+    .donate-video {
+    text-align: center;
+    margin-top: 20px;
+    background: #bed5df;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 70%;
+    margin: 30px auto;
+}
+
+    .donate-video:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .donate-video h3 {
+        color: #333;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .donate-video video {
+        width: 100%;
+        max-width: 600px;
+        border-radius: 10px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    }
+    .donate-box:hover, .donation-box:hover, .flowchart:hover, .donate-goods:hover, .donate-video:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+
+
+    </style>
 </head>
 <body>
+     <!-- Navbar -->
+     <nav class="navbar navbar-expand-lg custom-navbar">
+        <div class="container-fluid d-flex justify-content-between">
+            <a class="navbar-brand geo-aid-logo">Geo-Aid</a>
 
-    <!-- Slideshow Section -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about_us.html">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="donation.html">Donation</a></li>
+                    <li class="nav-item"><a class="nav-link" href="volunteering.html">Volunteering</a></li>
+                    <li class="nav-item"><a class="nav-link" href="live_updates.html">Live Updates</a></li>
+                    <li class="nav-item"><a class="nav-link" href="resource.html">Resource Allocation</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Slideshow -->
     <div class="slideshow-container">
-        <div class="slide fade"><img src="slide1.jpg" alt="Helping Hands"></div>
-        <div class="slide fade"><img src="slide2.jpg" alt="Food Distribution"></div>
-        <div class="slide fade"><img src="slide3.jpg" alt="Disaster Relief"></div>
-    </div>
-
-    <!-- Image Section -->
-    <div class="image-section">
-        <img src="donation-event.jpg" alt="Donation Event">
+        <img class="slides" src="photos_bg/donateslid1.jpg">
+        <img class="slides" src="photos_bg/donateslide2.jpeg">
+        <img class="slides" src="photos_bg/donationslide3.jpg">
     </div>
 
     <!-- Why Donate Section -->
-    <div class="why-donate">
+    <div class="why-donate-section">
         <h2>🌟 Why Donate? 🌟</h2>
-        <p>
-            <strong>Disasters can strike at any moment</strong>, leaving communities devastated. 
-            <br>GeoAid provides <span class="highlight">food, medical aid, shelter, and rescue assistance</span> to those in need.
-        </p>
-        <p>
-            With <strong>100% transparency</strong>, every donation goes towards relief efforts.
-            <br>💙 <em>Your generosity saves lives!</em> 💙
-        </p>
+        <div class="donate-container">
+            <div class="donate-box">
+                <h3>🚑 Immediate Disaster Relief</h3>
+                <p>Provide urgent aid, including food, water, and shelter to those in crisis.</p>
+            </div>
+            <div class="donate-box">
+                <h3>🏡 Long-Term Community Support</h3>
+                <p>Help rebuild communities and support sustainable development.</p>
+            </div>
+            <div class="donate-box">
+                <h3>🩺 Medical Aid & Health Services</h3>
+                <p>Fund emergency medical assistance and healthcare for affected individuals.</p>
+            </div>
+            <div class="donate-box">
+                <h3>🌍 Climate Crisis & Sustainability</h3>
+                <p>Support environmental initiatives and disaster preparedness efforts.</p>
+            </div>
+            <div class="donate-box">
+                <h3>🚒 Supporting First Responders</h3>
+                <p>Equip and train volunteers and emergency personnel for rapid response.</p>
+            </div>
+        </div>
     </div>
 
-    <!-- Donation Forms Section -->
+    <!-- Donation Forms -->
     <div class="donation-container">
         <div class="donation-box">
-            <h3>💰 Choose Your Donation Frequency</h3>
-            <label><input type="radio" name="donation-type"> One-Time</label>
-            <label><input type="radio" name="donation-type"> Monthly</label>
-            <label><input type="radio" name="donation-type"> Yearly</label>
+            <h3 class="donation-title">💰 How Often Would You Like to Donate?</h3>
+            <div class="form-check">
+                <label class="form-check-label" for="oneTime">One-Time</label>
+                <input class="form-check-input" type="radio" name="donationType" id="oneTime">
+                
+            </div>
+            <div class="form-check">
+               
+                <label class="form-check-label" for="monthly">Monthly</label>
+                <input class="form-check-input" type="radio" name="donationType" id="monthly">
+            </div>
+            <div class="form-check">
+              
+                <label class="form-check-label" for="yearly">Yearly</label>
+                <input class="form-check-input" type="radio" name="donationType" id="yearly">
+            </div>
         </div>
-
         <div class="donation-box">
-            <h3>📋 Personal Details</h3>
-            <input type="text" placeholder="Email">
-            <input type="text" placeholder="Phone Number">
-            <input type="text" placeholder="Address">
-            <input type="text" placeholder="Postcode">
-            <input type="text" placeholder="City">
-            <input type="text" placeholder="Country">
-        </div>
+            <h3>📜 Your Personal Details</h3>
+            <form>
+                <input type="email" class="form-control mb-2" placeholder="Email" required>
+                <input type="text" class="form-control mb-2" placeholder="Phone Number" required>
+                <input type="text" class="form-control mb-2" placeholder="Address" required>
+                <input type="text" class="form-control mb-2" placeholder="Postcode" required>
+                <input type="text" class="form-control mb-2" placeholder="City" required>
+                <input type="text" class="form-control mb-2" placeholder="Country" required>
+            </form>
 
+        </div>
         <div class="donation-box">
             <h3>💳 Payment Details</h3>
             <input type="text" placeholder="Card Number">
-            <input type="text" placeholder="Expiry Date (MM/YY)">
+            <input type="text" placeholder="Expiry Date">
             <input type="text" placeholder="CVV">
-            <h4>Or Donate by QR</h4>
-            <img src="qr-code.png" alt="QR Code for UPI">
+            <button>Donate Now</button>
         </div>
+        <div class="qr">
+        <h6 class="text-center mt-3 fw-bold">Or Donate by QR</h6>
+        <img src="photos_bg/paymentQr.jpg" alt="QR Code" class="qr-code">
+        <button class="btn btn-donate mt-3">Donate Now</button>
     </div>
+</div>
 
-    <!-- Flowchart Section -->
+    <!-- Flowchart for Other Ways to Donate -->
     <div class="flowchart">
-        <h2>📌 Other Ways You Can Donate</h2>
-        <div class="flowchart-container">
-            <div class="flow-item">💵 Direct Bank Transfer</div>
-            <div class="flow-arrow">➡️</div>
-            <div class="flow-item">📦 Donate Goods</div>
-            <div class="flow-arrow">➡️</div>
-            <div class="flow-item">🙌 Volunteer Your Time</div>
-        </div>
+        <h3>🔄 Other Ways You Can Donate</h3>
+        <ul>
+            <li>🏦 Direct Bank Transfer</li>
+            <li>🎁 Donate Goods</li>
+            <li>⏳ Volunteer Your Time</li>
+        </ul>
     </div>
 
-    <!-- Goods Donation Form -->
-    <div class="goods-donation">
-        <h3>🛍️ Would You Like to Donate Goods?</h3>
-        <label><input type="checkbox"> Food</label>
-        <label><input type="checkbox"> Medicines</label>
-        <label><input type="checkbox"> Clothes</label>
+    <!-- Donate Goods Form -->
+    <div class="donate-goods">
+        <img src="photos_bg/don3.jpg" alt="Donate Goods" class="donate-goods-img">
+        <br>
+        <br>
+        <h3>Would You Like to Donate Goods?</h3>
+        <p>Select items you wish to donate:</p>
+        <input type="checkbox"> Food
+        <input type="checkbox"> Medicines
+        <input type="checkbox"> Clothes
+        <br><br>
         <textarea placeholder="Describe the goods you wish to donate"></textarea>
+        <br><br>
         <button>Submit</button>
     </div>
+    <div class="donate-video">
+        <h3>🎥 Watch How Your Donations Make an Impact</h3>
+    <video controls>
+        <source src="photos_bg/invideo-ai-480 Join Hands to Rebuild Lives! 2025-03-31 (1) (online-video-cutter.com).mp4" type="video/mp4">
+    </video>
+    </div>
 
-    <script src="script.js"></script>
+    <!-- JavaScript for Slideshow -->
+    <script>
+        let slideIndex = 0;
+        function showSlides() {
+            let slides = document.getElementsByClassName("slides");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1; }
+            slides[slideIndex - 1].style.display = "block";
+            setTimeout(showSlides, 3000);
+        }
+        showSlides();
+    </script>
 
 </body>
 </html>
