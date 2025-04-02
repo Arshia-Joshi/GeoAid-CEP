@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #18567a;
+            --secondary: #b4c071;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .welcome-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+        
+        a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 2px solid white;
+            padding-bottom: 2px;
+            transition: all 0.3s;
+        }
+        
+        a:hover {
+            color: #f5f6fa;
+            border-bottom-color: #f5f6fa;
+        }
+        
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 15s infinite linear;
+            z-index: -1;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-1000px) rotate(720deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="bubble" style="width: 100px; height: 100px; bottom: -50px; left: 20%; animation-duration: 20s;"></div>
+    <div class="bubble" style="width: 150px; height: 150px; bottom: -75px; right: 15%; animation-duration: 25s;"></div>
+    <div class="bubble" style="width: 70px; height: 70px; bottom: -35px; left: 50%; animation-duration: 18s;"></div>
+    
+    <div class="welcome-container">
+        <h1>Welcome, {{ username }}!</h1>
+        <p>You have successfully logged in to your account.</p>
+        <p><a href="{{ url_for('logout') }}">Go to Home page!</a></p>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('body');
+            
+            for (let i = 0; i < 5; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                
+                const size = Math.random() * 100 + 50;
+                const left = Math.random() * 100;
+                const duration = Math.random() * 15 + 10;
+                const delay = Math.random() * 5;
+                
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.bottom = `-${size/2}px`;
+                bubble.style.left = `${left}%`;
+                bubble.style.animationDuration = `${duration}s`;
+                bubble.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(bubble);
+            }
+        });
+    </script>
+</body>
+</html>
