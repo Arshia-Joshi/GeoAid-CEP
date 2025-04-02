@@ -206,15 +206,7 @@
     <div class="bubble" style="width: 150px; height: 150px; bottom: -75px; right: 15%; animation-duration: 25s;"></div>
     <div class="bubble" style="width: 70px; height: 70px; bottom: -35px; left: 50%; animation-duration: 18s;"></div>
     
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <div class="flashes">
-                {% for category, message in messages %}
-                    <div class="flash {{ category }}">{{ message }}</div>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
+   
     
     <div class="login-container">
         <div class="login-header">
