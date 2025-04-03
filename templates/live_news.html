@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Disaster Updates</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/live_news.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Live Disaster Updates</h1>
+    </header>
+    <section>
+        <h2>Breaking News!</h2>
+
+        <!-- Embedded YouTube Live Stream -->
+        <div class="video-container">
+            <iframe width="560" height="315" 
+                src="https://www.youtube.com/embed/live_stream?channel=UC9CYT9gSNLevX5ey2_6CK0Q" 
+                title="Live Disaster News"
+                frameborder="0" allowfullscreen>
+            </iframe>
+        </div>
+
+        <!-- OR, Use a Local Video (Uncomment this if needed) -->
+        <!-- <video width="560" height="315" controls>
+            <source src="{{ url_for('static', filename='videos/news.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video> -->
+
+    </section>
+    <main>
+
+        <!-- Disaster Photos Section -->
+        <section class="card photos">
+            <h2>Here's What is Happening Near You</h2>
+            <div id="photo-gallery">No images available.</div>
+        </section>
+
+        <!-- Upload Photos Section -->
+        <section class="card upload">
+            <h2>Upload Photos of Your Area</h2>
+            <form id="upload-form" enctype="multipart/form-data">
+                <input type="file" id="file-upload" name="file" required>
+                <button type="submit">Upload</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="live_news.js"></script>
+</body>
+</html>
