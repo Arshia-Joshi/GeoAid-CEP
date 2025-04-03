@@ -4,12 +4,11 @@ body {
     margin: 0;
     padding: 0;
     text-align: center;
-    background: url('../images/newsroom-bg.jpg') no-repeat center center fixed;
+    background: url("../images/news_bg.jpg") no-repeat center center fixed;
     background-size: cover;
     position: relative;
 }
 
-/* Dark Overlay for Readability */
 body::before {
     content: "";
     position: absolute;
@@ -17,7 +16,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    background: rgba(0, 0, 0, 0.5); 
     z-index: -1;
 }
 
@@ -78,7 +77,7 @@ h2 {
 
 /* News Cards */
 .card {
-    background: white;
+    background: rgb(248, 87, 87);
     margin: 20px auto;
     padding: 20px;
     width: 80%;
@@ -90,7 +89,7 @@ h2 {
 /* Upload Form */
 .upload-section {
     text-align: center;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(155, 28, 28, 0.8);
     padding: 20px;
     margin: 20px auto;
     width: 50%;
@@ -115,15 +114,36 @@ h2 {
     background-color: #218838;
 }
 
-/* Video Container */
-.video-container {
+.news-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1000px;
     margin: 20px auto;
-    max-width: 560px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-    background: white;
-    padding: 10px;
+    padding: 20px;
+    background: rgba(227, 65, 65, 0.854);
     border-radius: 10px;
 }
+
+.news-text {
+    width: 50%;
+    text-align: left;
+    font-size: 18px;
+    color: #333;
+    padding-right: 20px;
+}
+
+.video-container {
+    width: 50%;
+    text-align: center;
+}
+
+.video-container iframe {
+    width: 100%;
+    height: 300px;
+    border-radius: 10px;
+}
+
 
 iframe, video {
     width: 100%;
@@ -172,16 +192,16 @@ iframe, video {
 /* Caption Styling */
 .caption {
     position: absolute;
-    bottom: 10px;
+    bottom: 30px; /* Moves text higher */
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.6);
     color: white;
-    padding: 8px 15px;
+    padding: 5px 10px;
     border-radius: 5px;
-    font-size: 16px;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
 }
 
 /* Show Caption on Hover */
