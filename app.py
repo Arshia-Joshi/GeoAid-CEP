@@ -1,26 +1,61 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
+import os
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
-# Route for the Live News & Photos page
+UPLOAD_FOLDER = 'static/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp'}
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 @app.route('/')
 def index():
     return render_template('live_news.html')
 
-# Route to handle photo uploads
 @app.route('/upload', methods=['POST'])
 def upload_photo():
     if 'photo' not in request.files:
-        return redirect(request.url)
+        return jsonify({'error': 'No file part'})
 
     photo = request.files['photo']
-    if photo.filename == '':
-        return redirect(request.url)
+    location = request.form.get('location', 'Unknown Location')
 
-    # Here, you should save the file to a proper directory (e.g., static/uploads)
-    photo.save(f'static/uploads/{photo.filename}')
-    
-    return redirect(url_for('index'))
+    if photo.filename == '':
+        return jsonify({'error': 'No selected file'})
+
+    if not allowed_file(photo.filename):
+        return jsonify({'error': 'Invalid file type'})
+
+    filename = secure_filename(photo.filename)
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    photo.save(file_path)
+
+    return jsonify({'image_url': url_for('static', filename=f'uploads/{filename}'), 'location': location, 'filename': filename})
+
+@app.route('/delete_photo', methods=['POST'])
+def delete_photo():
+    data = request.json
+    filename = data.get('filename')
+
+    if not filename:
+        return jsonify({'error': 'Filename not provided'}), 400
+
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        return jsonify({'success': True})
+    else:
+        return jsonify({'error': 'File not found'}), 404
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+

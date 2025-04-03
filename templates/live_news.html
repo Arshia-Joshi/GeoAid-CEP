@@ -5,49 +5,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Disaster Updates</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/live_news.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Breaking News Ticker -->
+    <div class="breaking-news">
+        <span>⚠️ BREAKING: Severe floods hit multiple regions, submerging homes, blocking roads, and displacing thousands. | 🌍 ALERT: Earthquake tremors felt in coastal areas, raising aftershock concerns. | 🚨 RELIEF: Emergency teams rescue stranded residents, providing aid. | ⚠️ STAY ALERT: Authorities warn of heavy rain, landslides—follow official updates. | 🚧 TRAVEL HIT: Highways, railways affected; check alternate routes. | 🏥 MEDICAL EMERGENCY: Hospitals on high alert, mobile health units deployed. | 🆘 HELP NEEDED: Volunteers, donations required—contact relief centers. | 🔴 LIVE UPDATES: Follow real-time crisis developments. | ⚡ POWER OUTAGES: Electricity disrupted in flood-hit zones, restoration ongoing. | ⏳ EVACUATIONS: Authorities relocate residents from high-risk areas.
+        </span>
+    </div>
+
+    <!-- Header -->
     <header>
-        <h1>Live Disaster Updates</h1>
+        <h1>⚡ Live Disaster Updates ⚡</h1>
     </header>
+
     <section>
-        <h2>Breaking News!</h2>
+        <h2 class="urgent-headline">🚨 LIVE EMERGENCY BROADCAST 🚨</h2>
 
         <!-- Embedded YouTube Live Stream -->
         <div class="video-container">
             <iframe width="560" height="315" 
-                src="https://www.youtube.com/embed/live_stream?channel=UC9CYT9gSNLevX5ey2_6CK0Q" 
+                src="https://www.youtube.com/embed/rBi_EsZFl1Y" 
                 title="Live Disaster News"
-                frameborder="0" allowfullscreen>
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
             </iframe>
         </div>
-
-        <!-- OR, Use a Local Video (Uncomment this if needed) -->
-        <!-- <video width="560" height="315" controls>
-            <source src="{{ url_for('static', filename='videos/news.mp4') }}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video> -->
-
     </section>
-    <main>
 
-        <!-- Disaster Photos Section -->
-        <section class="card photos">
-            <h2>Here's What is Happening Near You</h2>
-            <div id="photo-gallery">No images available.</div>
+    <main>
+        <!-- Photo Slider Section -->
+        <section class="photo-slider">
+            <h2 class="highlighted">🌍 Here's What is Happening Near You</h2>
+            <div class="slider-container">
+                <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+                <div class="slider">
+                    <div class="slides">
+                        <div class="slide">
+                            <img src="{{ url_for('static', filename='images/flood1.jpg') }}" alt="Flood Image">
+                            <div class="caption">🌊 Idukki: Water levels rising rapidly!</div>
+                        </div>
+                        <div class="slide">
+                            <img src="{{ url_for('static', filename='images/flood2.webp') }}" alt="Flood Image">
+                            <div class="caption">🚨 Wayanad: Roads submerged, rescue ongoing!</div>
+                        </div>
+                        <div class="slide">
+                            <img src="{{ url_for('static', filename='images/flood4.jpg') }}" alt="Flood Image">
+                            <div class="caption">⚠️ Kottayam: Houses flooded, evacuations in progress!</div>
+                        </div>
+                        <div class="slide">
+                            <img src="{{ url_for('static', filename='images/flood5.webp') }}" alt="Flood Image">
+                            <div class="caption">🆘 Pathanamthitta: Rescue teams deployed!</div>
+                        </div>
+                        <div class="slide">
+                            <img src="{{ url_for('static', filename='images/flood6.jpg') }}" alt="Flood Image">
+                            <div class="caption">🚧 Kozhikode: Bridges damaged due to heavy rain!</div>
+                        </div>
+                        <div class="slide">
+                            <img src="{{ url_for('static', filename='images/flood7.jpeg') }}" alt="Flood Image">
+                            <div class="caption">📢 Malappuram: Emergency shelters set up!</div>
+                        </div>
+                        <div class="slide">
+                            <img src="{{ url_for('static', filename='images/flood8.webp') }}" alt="Flood Image">
+                            <div class="caption">🚑 Thrissur: Medical teams treating flood victims!</div>
+                        </div>
+                    </div>  
+                </div> 
+                <button class="next" onclick="moveSlide(1)">&#10095;</button>
+            </div>  
         </section>
 
         <!-- Upload Photos Section -->
         <section class="card upload">
-            <h2>Upload Photos of Your Area</h2>
+            <h2 class="urgent-headline">📸 Upload Photos of Your Area</h2>
+            <p class="upload-info">Help others stay informed. Share real-time updates from your location.</p>
             <form id="upload-form" enctype="multipart/form-data">
-                <input type="file" id="file-upload" name="file" required>
+                <input type="file" id="file-upload" name="file" accept="image/*" required>
+                <input type="text" id="location" name="location" placeholder="Enter Location" required>
                 <button type="submit">Upload</button>
             </form>
         </section>
     </main>
 
-    <script src="live_news.js"></script>
+    <script src="{{ url_for('static', filename='js/live_news.js') }}"></script>
 </body>
 </html>
