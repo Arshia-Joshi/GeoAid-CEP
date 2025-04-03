@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* All the same styles as login.html */
+        /* Add this additional style */
+        .password-requirements {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 5px;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="bubble" style="width: 100px; height: 100px; bottom: -50px; left: 20%; animation-duration: 20s;"></div>
+    <div class="bubble" style="width: 150px; height: 150px; bottom: -75px; right: 15%; animation-duration: 25s;"></div>
+    <div class="bubble" style="width: 70px; height: 70px; bottom: -35px; left: 50%; animation-duration: 18s;"></div>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flashes">
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Create Account</h1>
+            <p>Join our community</p>
+        </div>
+        
+        <form method="POST" action="{{ url_for('register') }}">
+            <div class="input-group">
+                <input type="text" id="username" name="username" required minlength="4">
+                <label for="username">Username</label>
+            </div>
+            
+            <div class="input-group">
+                <input type="text" id="name" name="name">
+                <label for="name">Full Name (optional)</label>
+            </div>
+            
+            <div class="input-group">
+                <input type="password" id="password" name="password" required minlength="6">
+                <label for="password">Password</label>
+                <div class="password-requirements">Minimum 6 characters</div>
+            </div>
+            
+            <div class="input-group">
+                <input type="password" id="confirm_password" name="confirm_password" required>
+                <label for="confirm_password">Confirm Password</label>
+            </div>
+            
+            <button type="submit" class="btn">Register</button>
+        </form>
+        
+        <div class="login-footer">
+            <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+        </div>
+    </div>
+    
+    <script>
+        // Same bubble and flash message JavaScript as login.html
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('body');
+            
+            for (let i = 0; i < 5; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                
+                const size = Math.random() * 100 + 50;
+                const left = Math.random() * 100;
+                const duration = Math.random() * 15 + 10;
+                const delay = Math.random() * 5;
+                
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.bottom = `-${size/2}px`;
+                bubble.style.left = `${left}%`;
+                bubble.style.animationDuration = `${duration}s`;
+                bubble.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(bubble);
+            }
+            
+            const flashes = document.querySelectorAll('.flash');
+            flashes.forEach(flash => {
+                setTimeout(() => {
+                    flash.style.animation = 'slideOut 0.5s ease-in-out forwards';
+                    setTimeout(() => flash.remove(), 500);
+                }, 5000);
+            });
+            
+            // Password match validation
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirm_password');
+            
+            function validatePassword() {
+                if (password.value !== confirmPassword.value) {
+                    confirmPassword.setCustomValidity("Passwords don't match");
+                } else {
+                    confirmPassword.setCustomValidity('');
+                }
+            }
+            
+            password.onchange = validatePassword;
+            confirmPassword.onkeyup = validatePassword;
+        });
+    </script>
+</body>
+</html>
