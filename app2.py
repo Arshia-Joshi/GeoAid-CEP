@@ -69,4 +69,3 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug=True)
->>>>>>> 8a985b16e8c7b4b5522eb22e24b8890666b0be0e
