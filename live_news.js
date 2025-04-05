@@ -42,7 +42,7 @@ function addImageToCarousel(imageUrl, location, filename) {
     newSlide.appendChild(caption);
     newSlide.appendChild(deleteButton);
 
-    slider.prepend(newSlide); // Add the new image at the beginning
+    slider.prepend(newSlide); 
 }
 
 async function deletePhoto(slideElement, filename) {
@@ -57,13 +57,11 @@ async function deletePhoto(slideElement, filename) {
     const data = await response.json();
 
     if (data.success) {
-        slideElement.remove(); // Remove the image from the carousel
+        slideElement.remove();
     } else {
         alert('Error deleting the image');
     }
 }
-
-// ---------------- Carousel Sliding Logic ----------------
 
 let currentIndex = 0;
 
@@ -79,7 +77,7 @@ function moveSlide(direction) {
         currentIndex = 0;
     }
 
-    const offset = -currentIndex * 100; // Move by 100% of container width
+    const offset = -currentIndex * 100; 
     slides.style.transform = `translateX(${offset}%)`;
 }
 

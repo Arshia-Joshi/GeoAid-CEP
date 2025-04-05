@@ -17,7 +17,11 @@ def allowed_file(filename):
 
 @app.route('/')
 def index():
-    return render_template('live_news.html')
+    return render_template('donation.html')  # Load the main donation page with navbar
+
+@app.route('/live_news')
+def live_news():
+    return render_template('live_news.html')  # Loads the Live News page
 
 @app.route('/upload', methods=['POST'])
 def upload_photo():
@@ -57,5 +61,3 @@ def delete_photo():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
