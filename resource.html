@@ -3,106 +3,428 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resource Allocation</title>
+    <title>Resource Allocation | GeoAid</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="resource.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --pastel-blue: #a7c5eb;
+            --pastel-green: #b8e0d2;
+            --pastel-peach: #f7c5a8;
+            --pastel-lavender: #d4b8e0;
+            --pastel-mint: #b8e0c7;
+            --soft-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background-color: #f7e9e9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #3a3a3a;
+        }
+
+        /* Navbar Styling */
+        .custom-navbar {
+            background: linear-gradient(135deg, var(--pastel-blue), var(--pastel-mint)) !important;
+            box-shadow: var(--soft-shadow);
+            padding: 8px 0;
+        }
+
+        .custom-navbar .navbar-brand img {
+            transition: transform 0.3s ease;
+        }
+
+        .custom-navbar .navbar-brand:hover img {
+            transform: scale(1.05);
+        }
+
+        .custom-navbar .nav-link {
+            color: #3a3a3a !important;
+            font-weight: 500;
+            margin: 0 8px;
+            padding: 8px 15px !important;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .custom-navbar .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: #20576e !important;
+            transform: translateY(-2px);
+        }
+
+        .custom-navbar .navbar-toggler {
+            border: none;
+        }
+
+        /* Carousel Styling */
+        .carousel {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--soft-shadow);
+            margin-top: 20px;
+        }
+
+        .carousel-item {
+            height: 50vh;
+            min-height: 300px;
+        }
+
+        .carousel-item img {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }
+
+        .carousel-control-prev, .carousel-control-next {
+            width: 5%;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            margin: 0 15px;
+            height: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Resource Cards */
+        .resource-container {
+            padding: 40px 0;
+        }
+
+        .resource-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--soft-shadow);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            border: none;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .resource-image {
+            height: 250px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .resource-body {
+            padding: 25px;
+        }
+
+        .resource-title {
+            color: #20576e;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .resource-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--pastel-peach);
+        }
+
+        .resource-item {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .resource-item:before {
+            content: '\f054';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--pastel-blue);
+        }
+
+        .capacity-badge {
+            background-color: var(--pastel-mint);
+            color: #20576e;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--pastel-blue), var(--pastel-mint));
+            padding: 30px 0;
+            color: #3a3a3a;
+            margin-top: 50px;
+        }
+
+        .footer-links a {
+            color: #3a3a3a;
+            margin: 0 15px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #20576e;
+        }
+
+        .social-icons a {
+            color: #3a3a3a;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #20576e;
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .resource-card {
+                margin-bottom: 20px;
+            }
+            
+            .carousel-item {
+                height: 40vh;
+            }
+        }
+    </style>
 </head>
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg custom-navbar">
+    <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
         <div class="container">
-            <a class="navbar-brand geo-aid-logo" href="#">
-                <a href="home.html"><img src="photos_bg/logo.png" alt="GeoAid Logo" style="height: 40px; width: auto;">
-              </a>
+            <a class="navbar-brand" href="home.html">
+                <img src="photos_bg/logo.png" alt="GeoAid Logo" style="height: 40px; width: auto;">
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="donation.html">Donation</a></li>
-                    <li class="nav-item"><a class="nav-link" href="volunteering.html">Volunteering</a></li>
-                    <li class="nav-item"><a class="nav-link" href="live_news.html">Live Updates</a></li>
-                    <li class="nav-item"><a class="nav-link" href="resource.html">Resource Allocation</a></li>
-                    <li class="nav-item"><a class="nav-link" href="guidelines.html">Survival Instructions</a></li>
-                    <li class="nav-item"><a class="nav-link" href="about_us.html">About Us</a></li>
-                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="home.html"><i class="fas fa-home me-1"></i> Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="donation.html"><i class="fas fa-hand-holding-heart me-1"></i> Donation</a></li>
+                    <li class="nav-item"><a class="nav-link" href="volunteering.html"><i class="fas fa-hands-helping me-1"></i> Volunteering</a></li>
+                    <li class="nav-item"><a class="nav-link" href="live_news.html"><i class="fas fa-newspaper me-1"></i> Live Updates</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="resource.html"><i class="fas fa-map-marked-alt me-1"></i> Resource Allocation</a></li>
+                    <li class="nav-item"><a class="nav-link" href="guidelines.html"><i class="fas fa-book-open me-1"></i> Survival Guide</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about_us.html"><i class="fas fa-info-circle me-1"></i> About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html"><i class="fas fa-sign-in-alt me-1"></i> Login</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Slideshow (Bootstrap Carousel) -->
-    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="photos_bg/hospslid1.jpg" class="d-block w-100" alt="Hospital">
+    <!-- Hero Carousel -->
+    <div class="container">
+        <div id="resourceCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="photos_bg/hospslid1.jpg" class="d-block w-100" alt="Hospital">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Hospital Bed Availability</h5>
+                        <p>Real-time updates on medical resources in your area</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="photos_bg/shelter.jpg" class="d-block w-100" alt="Shelter">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Emergency Shelters</h5>
+                        <p>Find safe places near you</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="photos_bg/medical.jpg" class="d-block w-100" alt="Medical Facility">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Medical Facilities</h5>
+                        <p>Locate the nearest healthcare providers</p>
+                    </div>
+                </div>
             </div>
-            <div class="carousel-item">
-                <img src="photos_bg/shelter.jpg" class="d-block w-100" alt="Shelter">
-            </div>
-            <div class="carousel-item">
-                <img src="photos_bg/medical.jpg" class="d-block w-100" alt="Medical Facility">
-            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#resourceCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#resourceCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        </button>
     </div>
 
     <!-- Resource Allocation Content -->
-    <div class="container mt-5">
+    <div class="container resource-container">
+        <div class="text-center mb-5">
+            <h1 class="display-5 fw-bold">Resource Allocation</h1>
+            <p class="lead">Find essential resources in your area during emergencies</p>
+        </div>
+
         <!-- Hospital Beds Section -->
-        <div class="row align-items-center">
-            <div class="col-md-4 text-center">
-                <img src="photos_bg/hospital_bed.jpg" alt="Hospital" class="left-image img-fluid">
-            </div>
-            <div class="col-md-8">
-                <div class="resource-box">
-                    <h2 class="resource-title">Hospital Bed Availability</h2>
-                    <p><strong>City General Hospital:</strong> 120 beds available</p>
-                    <p><strong>Community Health Center:</strong> 85 beds available</p>
-                    <p><strong>Sunrise Medical Facility:</strong> 50 beds available</p>
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="card resource-card h-100">
+                    <img src="photos_bg/hospital_bed.jpg" class="card-img-top resource-image" alt="Hospital">
+                    <div class="card-body resource-body">
+                        <h3 class="resource-title">Hospital Beds</h3>
+                        <div class="resource-item">
+                            <strong>City General Hospital</strong> 
+                            <span class="capacity-badge">120 beds</span>
+                            <div class="text-muted small">Last updated: 15 mins ago</div>
+                        </div>
+                        <div class="resource-item">
+                            <strong>Community Health Center</strong> 
+                            <span class="capacity-badge">85 beds</span>
+                            <div class="text-muted small">Last updated: 30 mins ago</div>
+                        </div>
+                        <div class="resource-item">
+                            <strong>Sunrise Medical Facility</strong> 
+                            <span class="capacity-badge">50 beds</span>
+                            <div class="text-muted small">Last updated: 1 hour ago</div>
+                        </div>
+                        <button class="btn btn-outline-primary mt-3 w-100">View All Hospitals</button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Shelters Section -->
-        <div class="row align-items-center mt-4">
-            <div class="col-md-4 text-center">
-                <img src="photos_bg/shelter_ph.jpg" alt="Shelter" class="left-image img-fluid">
-            </div>
-            <div class="col-md-8">
-                <div class="resource-box">
-                    <h2 class="resource-title">Nearby Shelters</h2>
-                    <p><strong>Hope Shelter:</strong> Capacity: 200 people</p>
-                    <p><strong>Sunrise Shelter:</strong> Capacity: 150 people</p>
-                    <p><strong>Greenfield Refuge:</strong> Capacity: 100 people</p>
+            <!-- Shelters Section -->
+            <div class="col-lg-4 mb-4">
+                <div class="card resource-card h-100">
+                    <img src="photos_bg/shelter_ph.jpg" class="card-img-top resource-image" alt="Shelter">
+                    <div class="card-body resource-body">
+                        <h3 class="resource-title">Emergency Shelters</h3>
+                        <div class="resource-item">
+                            <strong>Hope Shelter</strong> 
+                            <span class="capacity-badge">200 capacity</span>
+                            <div class="text-muted small">Open 24/7</div>
+                        </div>
+                        <div class="resource-item">
+                            <strong>Sunrise Shelter</strong> 
+                            <span class="capacity-badge">150 capacity</span>
+                            <div class="text-muted small">Pet-friendly</div>
+                        </div>
+                        <div class="resource-item">
+                            <strong>Greenfield Refuge</strong> 
+                            <span class="capacity-badge">100 capacity</span>
+                            <div class="text-muted small">Wheelchair accessible</div>
+                        </div>
+                        <button class="btn btn-outline-primary mt-3 w-100">Find Nearest Shelter</button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Medical Facilities Section -->
-        <div class="row align-items-center mt-4">
-            <div class="col-md-4 text-center">
-                <img src="photos_bg/medicalhelp.jpg" alt="Medical Facility" class="left-image img-fluid">
-            </div>
-            <div class="col-md-8">
-                <div class="resource-box">
-                    <h2 class="resource-title">Medical Facilities Nearby</h2>
-                    <p><strong>Red Cross Clinic:</strong> Emergency and First Aid</p>
-                    <p><strong>City Pharmacy:</strong> 24/7 Open Pharmacy</p>
-                    <p><strong>Sunrise Health Center:</strong> Free Health Checkups</p>
+            <!-- Medical Facilities Section -->
+            <div class="col-lg-4 mb-4">
+                <div class="card resource-card h-100">
+                    <img src="photos_bg/medicalhelp.jpg" class="card-img-top resource-image" alt="Medical Facility">
+                    <div class="card-body resource-body">
+                        <h3 class="resource-title">Medical Facilities</h3>
+                        <div class="resource-item">
+                            <strong>Red Cross Clinic</strong> 
+                            <span class="capacity-badge">Emergency care</span>
+                            <div class="text-muted small">0.5 miles away</div>
+                        </div>
+                        <div class="resource-item">
+                            <strong>City Pharmacy</strong> 
+                            <span class="capacity-badge">24/7 service</span>
+                            <div class="text-muted small">1.2 miles away</div>
+                        </div>
+                        <div class="resource-item">
+                            <strong>Sunrise Health Center</strong> 
+                            <span class="capacity-badge">Free checkups</span>
+                            <div class="text-muted small">2.1 miles away</div>
+                        </div>
+                        <button class="btn btn-outline-primary mt-3 w-100">View All Facilities</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Additional Resources Section -->
+    <div class="container mb-5">
+        <div class="card border-0 shadow-sm" style="background-color: var(--pastel-lavender);">
+            <div class="card-body p-4">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h3 class="mb-3">Need more specific resources?</h3>
+                        <p class="mb-4">We can help you find specialized medical equipment, food distribution centers, and other critical resources in your area.</p>
+                        <button class="btn btn-primary">Search Advanced Resources</button>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3443/3443313.png" alt="Resources" style="max-height: 150px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>GeoAid</h5>
+                    <p>Providing critical resource information during emergencies to help communities stay safe and connected.</p>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0 text-center">
+                    <div class="footer-links mb-3">
+                        <a href="about_us.html">About</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="privacy.html">Privacy</a>
+                        <a href="terms.html">Terms</a>
+                    </div>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 mb-3">
+            <div class="text-center">
+                <p class="small mb-0">&copy; 2025 GeoAid. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Activate carousel auto-cycling
+        document.addEventListener('DOMContentLoaded', function() {
+            var myCarousel = document.getElementById('resourceCarousel');
+            var carousel = new bootstrap.Carousel(myCarousel, {
+                interval: 5000,
+                wrap: true
+            });
+            
+            // Add animation to resource cards on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.resource-card').forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.5s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
 </body>
 </html>
