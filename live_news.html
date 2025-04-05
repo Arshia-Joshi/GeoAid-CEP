@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GeoAid - Disaster Relief Platform</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #d32f2f;
+      color: white;
+      padding: 15px 20px;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+    .ticker {
+      background-color: black;
+      color: white;
+      padding: 10px;
+      overflow: hidden;
+      white-space: nowrap;
+      box-sizing: border-box;
+    }
+
+    .ticker span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scroll-left 15s linear infinite;
+    }
+
+    @keyframes scroll-left {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .box {
+      background-color: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .box h2 {
+      margin-top: 0;
+      color: #d32f2f;
+    }
+
+    .upload-form input, .upload-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .upload-form button {
+      margin-top: 15px;
+      padding: 10px 15px;
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .upload-form button:hover {
+      background-color: #b71c1c;
+    }
+
+    .carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding: 10px 0;
+    }
+
+    .carousel img {
+      max-height: 150px;
+      border-radius: 8px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    GeoAid - Disaster Relief Platform
+  </header>
+
+  <div class="ticker">
+    <span>🔴 Breaking News: Placeholder for live news updates… 🔴 Breaking News: More updates will appear here…</span>
+  </div>
+
+  <div class="container">
+    <!-- Live News Section -->
+    <div class="box">
+      <h2>📰 Live News Feed</h2>
+      <div id="news-feed">
+        <p><strong>[Headline 1]</strong> - Brief summary or intro.</p>
+        <p><strong>[Headline 2]</strong> - Brief summary or intro.</p>
+        <!-- Placeholder for dynamic news -->
+      </div>
+    </div>
+
+    <!-- Upload Photo Section -->
+    <div class="box">
+      <h2>📤 Upload Disaster Photo</h2>
+      <form class="upload-form" id="photo-upload-form">
+        <input type="file" name="image" required />
+        <input type="text" name="location" placeholder="Enter your location" required />
+        <textarea name="description" rows="3" placeholder="Short description (optional)"></textarea>
+        <button type="submit">Upload</button>
+      </form>
+    </div>
+
+    <!-- Live Photo Carousel -->
+    <div class="box" style="grid-column: span 2;">
+      <h2>🖼️ Live Photo Stream</h2>
+      <div class="carousel" id="photo-carousel">
+        <img src="https://via.placeholder.com/150" alt="placeholder"/>
+        <img src="https://via.placeholder.com/150" alt="placeholder"/>
+        <!-- Dynamic images will be inserted here -->
+      </div>
+    </div>
+
+    <!-- Map Integration -->
+    <div class="box" style="grid-column: span 2;">
+      <h2>🗺️ Disaster Map</h2>
+      <iframe src="https://www.openstreetmap.org/export/embed.html"></iframe>
+    </div>
+  </div>
+
+</body>
+</html>
