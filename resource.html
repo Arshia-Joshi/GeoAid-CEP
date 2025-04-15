@@ -6,6 +6,7 @@
     <title>Resource Allocation | GeoAid</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+   
     <style>
         :root {
             --pastel-blue: #a7c5eb;
@@ -189,6 +190,143 @@
             transform: translateY(-3px);
         }
 
+        /* New Location Finder Styles */
+        .location-finder {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--soft-shadow);
+            margin: 30px auto;
+            max-width: 800px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .location-finder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, 
+                var(--pastel-blue), 
+                var(--pastel-green), 
+                var(--pastel-peach), 
+                var(--pastel-lavender));
+        }
+
+        .location-finder h2 {
+            color: #20576e;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .location-input-group {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .location-input-group .form-control {
+            padding-left: 45px;
+            height: 50px;
+            border-radius: 25px;
+            border: 2px solid var(--pastel-blue);
+        }
+
+        .location-input-group .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--pastel-blue);
+            font-size: 1.2rem;
+        }
+
+        .location-btn {
+            border-radius: 25px;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, var(--pastel-blue), var(--pastel-mint));
+            border: none;
+            color: #20576e;
+        }
+
+        .location-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Map Styles */
+        .map-container {
+            height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--soft-shadow);
+            margin: 30px auto;
+            border: 5px solid white;
+        }
+
+        #resourceMap {
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Dynamic Resource List */
+        .dynamic-resource-list {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .dynamic-resource-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--pastel-blue);
+        }
+
+        .dynamic-resource-item:hover {
+            background-color: white;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .resource-distance {
+            font-size: 0.85rem;
+            color: var(--pastel-blue);
+            font-weight: 600;
+            display: inline-block;
+            padding: 2px 10px;
+            background-color: rgba(167, 197, 235, 0.2);
+            border-radius: 15px;
+        }
+
+        .view-more-btn {
+            color: var(--pastel-blue);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        /* Pulse Animation */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Leaflet Marker Customization */
+        .leaflet-marker-icon {
+            filter: hue-rotate(180deg) brightness(1.2);
+        }
+
         /* Responsive Adjustments */
         @media (max-width: 768px) {
             .resource-card {
@@ -197,6 +335,10 @@
             
             .carousel-item {
                 height: 40vh;
+            }
+
+            .location-finder {
+                padding: 20px;
             }
         }
     </style>
@@ -262,6 +404,38 @@
         </div>
     </div>
 
+    <!-- Location Finder Section -->
+    <div class="container">
+        <div class="location-finder pulse">
+            <h2><i class="fas fa-search-location me-2"></i> Find Resources Near You</h2>
+            <div class="row">
+                <div class="col-md-8 mb-3">
+                    <div class="location-input-group">
+                        <i class="fas fa-map-marker-alt input-icon"></i>
+                        <input type="text" id="locationInput" class="form-control" placeholder="Enter your address, city, or zip code">
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <button class="btn location-btn w-100" id="findLocationBtn">
+                        <i class="fas fa-search me-2"></i> Find Resources
+                    </button>
+                </div>
+                <div class="col-12 text-center">
+                    <button class="btn btn-outline-secondary" id="useCurrentLocationBtn">
+                        <i class="fas fa-location-arrow me-2"></i> Or Use My Current Location
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Display Section -->
+    <div class="container">
+        <div class="map-container">
+            <div id="resourceMap"></div>
+        </div>
+    </div>
+
     <!-- Resource Allocation Content -->
     <div class="container resource-container">
         <div class="text-center mb-5">
@@ -276,22 +450,15 @@
                     <img src="photos_bg/hospital_bed.jpg" class="card-img-top resource-image" alt="Hospital">
                     <div class="card-body resource-body">
                         <h3 class="resource-title">Hospital Beds</h3>
-                        <div class="resource-item">
-                            <strong>City General Hospital</strong> 
-                            <span class="capacity-badge">120 beds</span>
-                            <div class="text-muted small">Last updated: 15 mins ago</div>
+                        <div class="dynamic-resource-list" id="hospitalList">
+                            <div class="text-center py-4 text-muted">
+                                <i class="fas fa-info-circle me-2"></i>
+                                Enter your location to see nearby hospitals
+                            </div>
                         </div>
-                        <div class="resource-item">
-                            <strong>Community Health Center</strong> 
-                            <span class="capacity-badge">85 beds</span>
-                            <div class="text-muted small">Last updated: 30 mins ago</div>
-                        </div>
-                        <div class="resource-item">
-                            <strong>Sunrise Medical Facility</strong> 
-                            <span class="capacity-badge">50 beds</span>
-                            <div class="text-muted small">Last updated: 1 hour ago</div>
-                        </div>
-                        <button class="btn btn-outline-primary mt-3 w-100">View All Hospitals</button>
+                        <button class="btn btn-outline-primary mt-3 w-100" id="viewAllHospitals">
+                            <i class="fas fa-hospital me-2"></i> View All Hospitals
+                        </button>
                     </div>
                 </div>
             </div>
@@ -302,22 +469,15 @@
                     <img src="photos_bg/shelter_ph.jpg" class="card-img-top resource-image" alt="Shelter">
                     <div class="card-body resource-body">
                         <h3 class="resource-title">Emergency Shelters</h3>
-                        <div class="resource-item">
-                            <strong>Hope Shelter</strong> 
-                            <span class="capacity-badge">200 capacity</span>
-                            <div class="text-muted small">Open 24/7</div>
+                        <div class="dynamic-resource-list" id="shelterList">
+                            <div class="text-center py-4 text-muted">
+                                <i class="fas fa-info-circle me-2"></i>
+                                Enter your location to see nearby shelters
+                            </div>
                         </div>
-                        <div class="resource-item">
-                            <strong>Sunrise Shelter</strong> 
-                            <span class="capacity-badge">150 capacity</span>
-                            <div class="text-muted small">Pet-friendly</div>
-                        </div>
-                        <div class="resource-item">
-                            <strong>Greenfield Refuge</strong> 
-                            <span class="capacity-badge">100 capacity</span>
-                            <div class="text-muted small">Wheelchair accessible</div>
-                        </div>
-                        <button class="btn btn-outline-primary mt-3 w-100">Find Nearest Shelter</button>
+                        <button class="btn btn-outline-primary mt-3 w-100" id="viewAllShelters">
+                            <i class="fas fa-home me-2"></i> Find Nearest Shelter
+                        </button>
                     </div>
                 </div>
             </div>
@@ -328,40 +488,33 @@
                     <img src="photos_bg/medicalhelp.jpg" class="card-img-top resource-image" alt="Medical Facility">
                     <div class="card-body resource-body">
                         <h3 class="resource-title">Medical Facilities</h3>
-                        <div class="resource-item">
-                            <strong>Red Cross Clinic</strong> 
-                            <span class="capacity-badge">Emergency care</span>
-                            <div class="text-muted small">0.5 miles away</div>
+                        <div class="dynamic-resource-list" id="medicalList">
+                            <div class="text-center py-4 text-muted">
+                                <i class="fas fa-info-circle me-2"></i>
+                                Enter your location to see nearby medical facilities
+                            </div>
                         </div>
-                        <div class="resource-item">
-                            <strong>City Pharmacy</strong> 
-                            <span class="capacity-badge">24/7 service</span>
-                            <div class="text-muted small">1.2 miles away</div>
-                        </div>
-                        <div class="resource-item">
-                            <strong>Sunrise Health Center</strong> 
-                            <span class="capacity-badge">Free checkups</span>
-                            <div class="text-muted small">2.1 miles away</div>
-                        </div>
-                        <button class="btn btn-outline-primary mt-3 w-100">View All Facilities</button>
+                        <button class="btn btn-outline-primary mt-3 w-100" id="viewAllMedical">
+                            <i class="fas fa-clinic-medical me-2"></i> View All Facilities
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Additional Resources Section -->
+    <!-- Support Us Section -->
     <div class="container mb-5">
         <div class="card border-0 shadow-sm" style="background-color: var(--pastel-lavender);">
             <div class="card-body p-4">
                 <div class="row align-items-center">
                     <div class="col-md-8">
-                        <h3 class="mb-3">Need more specific resources?</h3>
-                        <p class="mb-4">We can help you find specialized medical equipment, food distribution centers, and other critical resources in your area.</p>
-                        <button class="btn btn-primary">Search Advanced Resources</button>
+                        <h3 class="mb-3">Support Our Mission</h3>
+                        <p class="mb-4">GeoAid relies on donations to maintain and improve our resource allocation services. Your contribution helps us save lives during emergencies.</p>
+                        <a href="donation.html" class="btn btn-primary">Donate Now</a>
                     </div>
                     <div class="col-md-4 text-center">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3443/3443313.png" alt="Resources" style="max-height: 150px;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3443/3443313.png" alt="Support Us" style="max-height: 150px;">
                     </div>
                 </div>
             </div>
@@ -390,6 +543,17 @@
                         <a href="#"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
+                <div class="col-md-4 text-md-end">
+                    <h5>Download Our App</h5>
+                    <div class="mt-2">
+                        <a href="#" class="btn btn-outline-dark btn-sm me-2 mb-2">
+                            <i class="fab fa-apple me-1"></i> App Store
+                        </a>
+                        <a href="#" class="btn btn-outline-dark btn-sm mb-2">
+                            <i class="fab fa-google-play me-1"></i> Play Store
+                        </a>
+                    </div>
+                </div>
             </div>
             <hr class="mt-4 mb-3">
             <div class="text-center">
@@ -399,32 +563,401 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Add Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Add Nominatim for geocoding (address search) -->
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    
     <script>
-        // Activate carousel auto-cycling
+        // Initialize the map
+        let map;
+        let markers = [];
+        let userLocationMarker = null;
+        let userLocation = null;
+
+        // Comprehensive resource data (same as before)
+        const resourceData = [
+            // Hospitals
+            {
+                name: "City General Hospital",
+                type: "hospital",
+                address: "123 Medical Drive, Cityville",
+                phone: "(555) 123-4567",
+                capacity: "120 beds available (35 ICU)",
+                distance: "",
+                lat: 34.052235,
+                lng: -118.243683,
+                speciality: "Trauma Center • 24/7 Emergency",
+                icon: "fas fa-hospital"
+            },
+            {
+                name: "Metropolitan Medical Center",
+                type: "hospital",
+                address: "456 Health Avenue, Cityville",
+                phone: "(555) 987-6543",
+                capacity: "85 beds available (15 ICU)",
+                distance: "",
+                lat: 34.058235,
+                lng: -118.253683,
+                speciality: "Pediatrics • Maternity • Emergency",
+                icon: "fas fa-hospital"
+            },
+            {
+                name: "University Teaching Hospital",
+                type: "hospital",
+                address: "789 College Road, Cityville",
+                phone: "(555) 456-7890",
+                capacity: "200 beds available (50 ICU)",
+                distance: "",
+                lat: 34.048235,
+                lng: -118.238683,
+                speciality: "Research Hospital • All Specialities",
+                icon: "fas fa-hospital"
+            },
+            
+            // Shelters
+            {
+                name: "Community Emergency Shelter",
+                type: "shelter",
+                address: "101 Safe Haven Lane, Cityville",
+                phone: "(555) 234-5678",
+                capacity: "150 capacity (Pet-friendly)",
+                distance: "",
+                lat: 34.062235,
+                lng: -118.233683,
+                speciality: "Family-friendly • Hot meals provided",
+                icon: "fas fa-home"
+            },
+            {
+                name: "Red Cross Disaster Shelter",
+                type: "shelter",
+                address: "202 Relief Road, Cityville",
+                phone: "(555) 345-6789",
+                capacity: "300 capacity (Wheelchair accessible)",
+                distance: "",
+                lat: 34.042235,
+                lng: -118.263683,
+                speciality: "24/7 Staff • Medical Support",
+                icon: "fas fa-home"
+            },
+            {
+                name: "Salvation Army Refuge Center",
+                type: "shelter",
+                address: "303 Hope Street, Cityville",
+                phone: "(555) 567-8901",
+                capacity: "120 capacity (Family units available)",
+                distance: "",
+                lat: 34.052235,
+                lng: -118.273683,
+                speciality: "Hot Meals • Counseling Services",
+                icon: "fas fa-home"
+            },
+            
+            // Medical Facilities
+            {
+                name: "Urgent Care Clinic Downtown",
+                type: "medical",
+                address: "404 Quick Street, Cityville",
+                phone: "(555) 678-9012",
+                capacity: "Walk-ins Welcome (Open until 10pm)",
+                distance: "",
+                lat: 34.056235,
+                lng: -118.243683,
+                speciality: "X-ray Available • Lab Services",
+                icon: "fas fa-clinic-medical"
+            },
+            {
+                name: "Community Health Center",
+                type: "medical",
+                address: "505 Wellness Boulevard, Cityville",
+                phone: "(555) 789-0123",
+                capacity: "Sliding Scale Fees",
+                distance: "",
+                lat: 34.052235,
+                lng: -118.233683,
+                speciality: "Primary Care • Dental Services",
+                icon: "fas fa-clinic-medical"
+            },
+            {
+                name: "Neighborhood Pharmacy & Clinic",
+                type: "medical",
+                address: "606 Medicine Lane, Cityville",
+                phone: "(555) 890-1234",
+                capacity: "Vaccinations Available",
+                distance: "",
+                lat: 34.058235,
+                lng: -118.248683,
+                speciality: "Pharmacy • Basic Care",
+                icon: "fas fa-clinic-medical"
+            }
+        ];
+
+        // Initialize the map when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
-            var myCarousel = document.getElementById('resourceCarousel');
-            var carousel = new bootstrap.Carousel(myCarousel, {
-                interval: 5000,
-                wrap: true
-            });
+            initMap();
             
-            // Add animation to resource cards on scroll
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = 1;
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            document.querySelectorAll('.resource-card').forEach(card => {
-                card.style.opacity = 0;
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'all 0.5s ease';
-                observer.observe(card);
-            });
+            // Set up event listeners
+            document.getElementById('findLocationBtn').addEventListener('click', geocodeAddress);
+            document.getElementById('useCurrentLocationBtn').addEventListener('click', getCurrentLocation);
+            document.getElementById('viewAllHospitals').addEventListener('click', () => filterResources('hospital'));
+            document.getElementById('viewAllShelters').addEventListener('click', () => filterResources('shelter'));
+            document.getElementById('viewAllMedical').addEventListener('click', () => filterResources('medical'));
         });
-    </script>
-</body>
-</html>
+
+        function initMap() {
+            // Create map centered on a default location (Los Angeles)
+            map = L.map('resourceMap').setView([34.0522, -118.2437], 12);
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Add geocoder control for address search
+            L.Control.geocoder({
+                defaultMarkGeocode: false,
+                position: 'topleft',
+                placeholder: 'Search for places...',
+                errorMessage: 'Nothing found.'
+            })
+            .on('markgeocode', function(e) {
+                const center = e.geocode.center;
+                userLocation = L.latLng(center.lat, center.lng);
+                updateResourceDisplay(userLocation);
+                document.querySelector('.location-finder').classList.remove('pulse');
+            })
+            .addTo(map);
+        }
+        setTimeout(() => {
+        map.invalidateSize();
+        }, 100);
+
+        function geocodeAddress() {
+            const address = document.getElementById('locationInput').value;
+            
+            if (!address) {
+                alert('Please enter a location');
+                return;
+            }
+
+            // Use Nominatim (OpenStreetMap's geocoding service)
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        const firstResult = data[0];
+                        userLocation = L.latLng(firstResult.lat, firstResult.lon);
+                        map.setView(userLocation, 14);
+                        updateResourceDisplay(userLocation);
+                        document.querySelector('.location-finder').classList.remove('pulse');
+                    } else {
+                        alert('We couldn\'t find that location. Please try a different address.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Geocoding error:', error);
+                    alert('Error searching for location. Please try again.');
+                });
+        }
+
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        userLocation = L.latLng(
+                            position.coords.latitude,
+                            position.coords.longitude
+                        );
+                        
+                        // Update the input field with approximate address
+                        reverseGeocode(userLocation);
+                        
+                        map.setView(userLocation, 14);
+                        updateResourceDisplay(userLocation);
+                        
+                        // Stop the pulse animation after location is found
+                        document.querySelector('.location-finder').classList.remove('pulse');
+                    },
+                    function(error) {
+                        alert("Error getting your location: " + error.message);
+                    },
+                    { enableHighAccuracy: true }
+                );
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function reverseGeocode(location) {
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${location.lat}&lon=${location.lng}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.display_name) {
+                        document.getElementById('locationInput').value = data.display_name;
+                    }
+                })
+                .catch(error => {
+                    console.error('Reverse geocoding error:', error);
+                });
+        }
+
+        function updateResourceDisplay(location) {
+            // Clear previous markers
+            clearMarkers();
+            
+            // Add user location marker (blue)
+            userLocationMarker = L.marker(location, {
+                icon: L.divIcon({
+                    className: 'user-location-marker',
+                    html: '<i class="fas fa-map-marker-alt" style="color: #4285F4; font-size: 32px;"></i>',
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 32]
+                }),
+                zIndexOffset: 1000
+            }).addTo(map)
+            .bindPopup("Your Location")
+            .openPopup();
+            
+            // Calculate distances and update resource data
+            const updatedResources = resourceData.map(resource => {
+                const distance = location.distanceTo(L.latLng(resource.lat, resource.lng)) / 1609.34; // Convert meters to miles
+                
+                return {
+                    ...resource,
+                    distance: distance.toFixed(1) + ' miles',
+                    exactDistance: distance
+                };
+            }).sort((a, b) => a.exactDistance - b.exactDistance);
+            
+            // Update all resource lists
+            updateResourceList('hospital', updatedResources);
+            updateResourceList('shelter', updatedResources);
+            updateResourceList('medical', updatedResources);
+            
+            // Add markers for all resources
+            updatedResources.forEach(resource => {
+                let iconColor;
+                switch(resource.type) {
+                    case 'hospital': iconColor = '#EA4335'; break;
+                    case 'shelter': iconColor = '#FBBC05'; break;
+                    case 'medical': iconColor = '#34A853'; break;
+                    default: iconColor = '#4285F4';
+                }
+                
+                const marker = L.marker([resource.lat, resource.lng], {
+                    icon: L.divIcon({
+                        className: 'resource-marker',
+                        html: `<i class="${resource.icon}" style="color: ${iconColor}; font-size: 24px; text-shadow: 0 0 3px white;"></i>`,
+                        iconSize: [24, 24],
+                        iconAnchor: [12, 24]
+                    })
+                }).addTo(map);
+                
+                // Add popup with resource info
+                marker.bindPopup(`
+                    <div style="min-width: 200px">
+                        <h6 style="color: #20576e; margin-bottom: 5px">
+                            <i class="${resource.icon} me-1"></i>
+                            ${resource.name}
+                        </h6>
+                        <p style="margin-bottom: 5px">
+                            <i class="fas fa-map-marker-alt me-1"></i> 
+                            ${resource.address}
+                        </p>
+                        <p style="margin-bottom: 5px">
+                            <i class="fas fa-phone me-1"></i> 
+                            ${resource.phone}
+                        </p>
+                        <p style="margin-bottom: 5px">
+                            <i class="fas fa-info-circle me-1"></i> 
+                            ${resource.capacity}
+                        </p>
+                        <p style="margin-bottom: 0">
+                            <i class="fas fa-star me-1"></i> 
+                            ${resource.speciality}
+                        </p>
+                    </div>
+                `);
+                
+                markers.push(marker);
+            });
+        }
+
+        function clearMarkers() {
+            // Remove all resource markers
+            markers.forEach(marker => map.removeLayer(marker));
+            markers = [];
+            
+            // Remove user location marker if exists
+            if (userLocationMarker) {
+                map.removeLayer(userLocationMarker);
+                userLocationMarker = null;
+            }
+        }
+
+        function updateResourceList(type, resources) {
+            const filteredResources = resources.filter(r => r.type === type);
+            const container = document.getElementById(`${type}List`);
+            
+            if (filteredResources.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-4 text-muted">
+                        <i class="fas fa-exclamation-circle me-2"></i>
+                        No ${type}s found nearby
+                    </div>
+                `;
+                return;
+            }
+            
+            // Show top 3 resources by default
+            const resourcesToShow = filteredResources.slice(0, 3);
+            container.innerHTML = '';
+            
+            resourcesToShow.forEach(resource => {
+                const item = document.createElement('div');
+                item.className = 'dynamic-resource-item';
+                item.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-start">
+                        <h6 class="mb-1">
+                            <i class="${resource.icon} me-2"></i>
+                            ${resource.name}
+                        </h6>
+                        <span class="resource-distance">${resource.distance}</span>
+                    </div>
+                    <p class="small mb-1 text-truncate">
+                        <i class="fas fa-map-marker-alt me-1"></i> 
+                        ${resource.address}
+                    </p>
+                    <p class="small mb-1">
+                        <i class="fas fa-phone me-1"></i> 
+                        ${resource.phone}
+                    </p>
+                    <p class="small mb-0 text-truncate">
+                        <i class="fas fa-info-circle me-1"></i> 
+                        ${resource.capacity}
+                    </p>
+                `;
+                
+                // Add click handler to center map on this resource
+                item.addEventListener('click', () => {
+                    map.setView([resource.lat, resource.lng], 16);
+                });
+                
+                container.appendChild(item);
+            });
+            
+            // Add "view more" if there are more resources
+            if (filteredResources.length > 3) {
+                const viewMore = document.createElement('div');
+                viewMore.className = 'text-center mt-2';
+                viewMore.innerHTML = `
+                    <button class="btn btn-sm btn-link view-more-btn" data-type="${type}">
+                        View ${filteredResources.length - 3} more ${type}s <i class="fas fa-chevron-down"></i>
+                    </button>
+                `;
+                container.appendChild(viewMore);
+                
+                viewMore.querySelector('button').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showAllResources(type, filteredResources)}
+
